@@ -28,34 +28,26 @@ export default function Login() {
 
   return (
     <section className="container">
-      <div className="login">
-        <h1 className="texte">
-          Pour entrer dans la bibliothèque, veuillez renseigner un mot de passe{" "}
-        </h1>
-        <form onSubmit={handleLogin}>
-          <label htmlFor="email">Username : </label>
-          <input
-            className="input-username"
-            type="username"
-            name="username"
-            onChange={handleChangeLogin}
-            required
-          />
-          <br />
-          <br />
-          <label htmlFor="mdp">Mot De Passe : </label>
-          <input
-            className="input-mdp"
-            type="password"
-            name="password"
-            onChange={handleChangeLogin}
-            required
-          />
-          <div className="button">
-            <button type="submit">Se connecter</button>
-          </div>
-        </form>
-      </div>
+      <h1 className="login">
+        Pour entrer dans la bibliothèque, veuillez renseigner un mot de passe.{" "}
+      </h1>
+      <form onSubmit={handleLogin}>
+        <label htmlFor="email">Username </label>
+        <input
+          type="username"
+          name="username"
+          onChange={handleChangeLogin}
+          required
+        />
+        <label htmlFor="mdp">Mot De Passe </label>
+        <input
+          type="password"
+          name="password"
+          onChange={handleChangeLogin}
+          required
+        />
+        <button type="submit">Se connecter</button>
+      </form>
     </section>
   );
 }
