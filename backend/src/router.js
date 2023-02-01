@@ -2,12 +2,26 @@ const express = require("express");
 
 const router = express.Router();
 
-const itemControllers = require("./controllers/itemControllers");
+const adminControllers = require("./controllers/adminControllers");
+const borrowerControllers = require("./controllers/borrowerControllers");
+const bookControllers = require("./controllers/bookControllers");
 
-router.get("/items", itemControllers.browse);
-router.get("/items/:id", itemControllers.read);
-router.put("/items/:id", itemControllers.edit);
-router.post("/items", itemControllers.add);
-router.delete("/items/:id", itemControllers.destroy);
+// Routes admin
+router.post("/login", adminControllers.log);
+router.post("/register", adminControllers.add);
+
+// Routes borrower
+router.get("/borrower", borrowerControllers.browse);
+router.get("/borrower/:id", borrowerControllers.read);
+router.put("/borrower/:id", borrowerControllers.edit);
+router.post("/borrower", borrowerControllers.add);
+router.delete("/borrower/:id", borrowerControllers.destroy);
+
+// Routes book
+router.get("/book", bookControllers.browse);
+router.get("/book/:id", bookControllers.read);
+router.put("/book/:id", bookControllers.edit);
+router.post("/book", bookControllers.add);
+router.delete("/book/:id", bookControllers.destroy);
 
 module.exports = router;

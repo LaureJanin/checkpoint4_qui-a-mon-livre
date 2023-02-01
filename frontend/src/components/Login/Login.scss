@@ -1,0 +1,84 @@
+@import "../../assets/_variables.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  .login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    font-family: $font-stack;
+    color: $primary-color;
+  }
+
+  a {
+    text-decoration: none;
+    //   color: $font-color;
+  }
+
+  a:hover {
+    //   color: $font-color;
+  }
+
+  .rectangle {
+    height: 35rem;
+    width: 45rem;
+    //   background-color: $secondary-color-four;
+  }
+
+  .input-mail {
+    //   font-size: title-size;
+  }
+
+  .input-mdp {
+    //   font-size: title-size;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    margin-top: 2rem;
+  }
+
+  input {
+    height: 50px;
+    width: 450px;
+  }
+
+  a {
+    text-align: left;
+    //   font-size: $font-size;
+  }
+
+  button {
+    //   background-color: $brand-color;
+    //   color: $secondary-color-four;
+    height: 50px;
+    width: 200px;
+    //   font-size: $font-size;
+    display: block;
+    margin-top: 2rem;
+    border: none;
+  }
+
+  @media screen and (max-width: 480px) {
+    .rectangle {
+      height: 25em;
+      width: 20rem;
+      // background-color: $secondary-color-four;
+    }
+
+    input {
+      height: 1, 5rem;
+      width: 15rem;
+    }
+  }
+}
