@@ -5,6 +5,16 @@ class BookManager extends AbstractManager {
     super({ table: "book" });
   }
 
+  findAll() {
+    return this.connection.query(`select * from  ${this.table}`);
+  }
+
+  findById(id) {
+    return this.connection.query(`select * from ${this.table} where id = ?`, [
+      id,
+    ]);
+  }
+
   insert(book) {
     return this.connection.query(
       `insert into ${this.table} (title, author, year, resume, isBorrowed, loan_date, borrower_id) values (?, ?, ?, ?, ?, ?, ?)`,

@@ -1,33 +1,109 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import instance from "../utils/instance";
 import "./Accueil.scss";
 
 export default function Accueil() {
   const [active, setActive] = useState(1);
   const [books, setBooks] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [year, setYear] = useState("");
+  const [resume, setResume] = useState("");
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/book", books)
+  const getData = () => {
+    instance
+      .get("/book", books)
       .then((result) => {
         setBooks(result.data);
       })
       .catch((err) => {
         console.error(err);
       });
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
   const selectCard = (id) => {
     setActive((id - 1) % books.length);
   };
 
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
+  function handleNewBook(e) {
+    e.preventDefault();
+    instance
+      .post(`/book`, {
+        title,
+        author,
+        year,
+        resume,
+        isBorrowed: true,
+        loan_date: "2023/06/02",
+        borrower_id: 2,
+      })
+      .then(() => {
+        setBooks(books);
+        getData();
+        setShowModal(!showModal);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function handleDelete(id) {
+    instance
+      .delete(`/book/${id}`)
+      .then(() => getData())
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   return (
     <section className="container">
-      <h1>Votre Bibliothèque</h1>
+      <h1>Vos livres empruntés</h1>
       <div className="button">
-        <button type="button">Ajouter un livre emprunté</button>
-        <button type="button">Ajouter un emprunteur</button>
+        {showModal ? (
+          <form className="modal_form" onSubmit={handleNewBook}>
+            <p>Enregistrer un nouvel emprunt</p>
+            <input
+              type="text"
+              value={title}
+              placeholder="Titre"
+              onChange={(event) => setTitle(event.target.value)}
+            />
+            <input
+              type="text"
+              value={author}
+              placeholder="Auteur"
+              onChange={(event) => setAuthor(event.target.value)}
+            />
+            <input
+              type="text"
+              value={year}
+              placeholder="Année"
+              onChange={(event) => setYear(event.target.value)}
+            />
+            <input
+              type="text"
+              value={resume}
+              placeholder="Résumé"
+              onChange={(event) => setResume(event.target.value)}
+            />
+            <button type="submit">Enregistrer</button>
+          </form>
+        ) : (
+          <button type="button" onClick={() => toggleModal()}>
+            Ajouter un livre emprunté
+          </button>
+        )}
       </div>
       <section className="slider-section">
         <div
@@ -41,7 +117,6 @@ export default function Accueil() {
           {books.map((book, index) => (
             <button
               type="button"
-              // layoutId={`card-${index}`}
               className={`card ${
                 active === index ? "card-active" : "".slice("")
               }`}
@@ -57,14 +132,19 @@ export default function Accueil() {
               <Link to={`/book/${book.id}`} key={book.id}>
                 <button type="button">Contacter l'emprunteur</button>
               </Link>
+              <button
+                type="submit"
+                key={book.id}
+                onClick={() => {
+                  handleDelete(book.id);
+                }}
+              >
+                Le livre a été rendu
+              </button>
             </button>
           ))}
         </div>
       </section>
-      <div className="button">
-        <button type="button">Previous</button>
-        <button type="button">Next</button>
-      </div>
     </section>
   );
 }

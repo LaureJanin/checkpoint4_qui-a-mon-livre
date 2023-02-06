@@ -5,6 +5,16 @@ class BorrowerManager extends AbstractManager {
     super({ table: "borrower" });
   }
 
+  findAll() {
+    return this.connection.query(`select * from  ${this.table}`);
+  }
+
+  findById(id) {
+    return this.connection.query(`select * from ${this.table} where id = ?`, [
+      id,
+    ]);
+  }
+
   insert(borrower) {
     return this.connection.query(
       `insert into ${this.table} (firstname, lastname, email, phone_number) values (?, ?, ?, ?)`,

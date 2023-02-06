@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
-// import instance from "../../utils/instance";
+// import axios from "axios";
+import instance from "../../utils/instance";
 import Notify from "../../utils/notification";
 
 import "./Login.scss";
@@ -17,8 +17,8 @@ export default function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:5000/login", loginAdmin)
+    instance
+      .post("/login", loginAdmin)
       .then((res) => console.warn(res.data))
       .then(() => navigate("/accueil"))
       .catch((err) =>
