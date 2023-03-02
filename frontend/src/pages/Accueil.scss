@@ -3,11 +3,12 @@
   flex-direction: column;
 
   h1 {
+    margin-top: 1rem;
     margin-bottom: 1rem;
   }
 
   .slider-section {
-    position: relative;
+    // position: relative;
     width: 80%;
     margin: auto;
   }
@@ -26,8 +27,7 @@
   .slider-flex {
     // position: absolute;
     display: flex;
-    margin-top: 2rem;
-
+    // margin-top: 2rem;
     transition: transform 3000ms cubic-bezier(0.19, 1, 0.22, 1);
 
     .card {
@@ -51,14 +51,14 @@
       padding: 0%;
     }
   }
-    button {
-    width:12rem;
+  button {
+    width: 12rem;
     height: 2rem;
     text-align: center;
     vertical-align: middle;
-    background-color :#c9768f;
-    color:white;
-    border-radius:5px;
+    background-color: #c9768f;
+    color: white;
+    border-radius: 5px;
     border: none;
     margin-bottom: 1rem;
   }

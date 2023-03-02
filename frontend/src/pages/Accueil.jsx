@@ -7,6 +7,7 @@ export default function Accueil() {
   const [active, setActive] = useState(1);
   const [books, setBooks] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [year, setYear] = useState("");
@@ -27,12 +28,34 @@ export default function Accueil() {
     getData();
   }, []);
 
+  function handleDelete(id) {
+    instance
+      .delete(`/book/${id}`)
+      .then(() => getData())
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   const selectCard = (id) => {
     setActive((id - 1) % books.length);
   };
 
   const toggleModal = () => {
     setShowModal(!showModal);
+  };
+
+  const deleteModal = () => {
+    setShowDeleteModal(!showDeleteModal);
+  };
+
+  const handleConfirmDelete = () => {
+    setShowDeleteModal(false);
+    handleDelete();
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
   };
 
   function handleNewBook(e) {
@@ -52,15 +75,6 @@ export default function Accueil() {
         getData();
         setShowModal(!showModal);
       })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-
-  function handleDelete(id) {
-    instance
-      .delete(`/book/${id}`)
-      .then(() => getData())
       .catch((err) => {
         console.error(err);
       });
@@ -132,15 +146,22 @@ export default function Accueil() {
               <Link to={`/book/${book.id}`} key={book.id}>
                 <button type="button">Contacter l'emprunteur</button>
               </Link>
-              <button
-                type="submit"
-                key={book.id}
-                onClick={() => {
-                  handleDelete(book.id);
-                }}
-              >
+              <button type="submit" key={book.id} onClick={deleteModal}>
                 Le livre a été rendu
               </button>
+              {showDeleteModal && (
+                <div className="modal">
+                  <div className="modal-content">
+                    <p>Êtes-vous sûr de vouloir supprimer ces données ?</p>
+                    <button type="button" onClick={handleConfirmDelete}>
+                      Oui
+                    </button>
+                    <button type="button" onClick={handleCancelDelete}>
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              )}
             </button>
           ))}
         </div>
