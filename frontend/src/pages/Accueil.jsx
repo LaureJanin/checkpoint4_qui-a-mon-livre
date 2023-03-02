@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 import instance from "../utils/instance";
 import "./Accueil.scss";
 
@@ -7,11 +8,11 @@ export default function Accueil() {
   const [active, setActive] = useState(1);
   const [books, setBooks] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [year, setYear] = useState("");
   const [resume, setResume] = useState("");
+  const [date, setDate] = useState("");
 
   const getData = () => {
     instance
@@ -28,34 +29,12 @@ export default function Accueil() {
     getData();
   }, []);
 
-  function handleDelete(id) {
-    instance
-      .delete(`/book/${id}`)
-      .then(() => getData())
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-
   const selectCard = (id) => {
     setActive((id - 1) % books.length);
   };
 
   const toggleModal = () => {
     setShowModal(!showModal);
-  };
-
-  const deleteModal = () => {
-    setShowDeleteModal(!showDeleteModal);
-  };
-
-  const handleConfirmDelete = () => {
-    setShowDeleteModal(false);
-    handleDelete();
-  };
-
-  const handleCancelDelete = () => {
-    setShowDeleteModal(false);
   };
 
   function handleNewBook(e) {
@@ -67,8 +46,8 @@ export default function Accueil() {
         year,
         resume,
         isBorrowed: true,
-        loan_date: "2023/06/02",
-        borrower_id: 2,
+        loan_date: date,
+        borrower_id: 1,
       })
       .then(() => {
         setBooks(books);
@@ -83,7 +62,7 @@ export default function Accueil() {
   return (
     <section className="container">
       <h1>Vos livres empruntés</h1>
-      <div className="button">
+      <div>
         {showModal ? (
           <form className="modal_form" onSubmit={handleNewBook}>
             <p>Enregistrer un nouvel emprunt</p>
@@ -108,8 +87,14 @@ export default function Accueil() {
             <input
               type="text"
               value={resume}
-              placeholder="Résumé"
+              placeholder="Résumé du livre"
               onChange={(event) => setResume(event.target.value)}
+            />
+            <label htmlFor="date">Date d'emprunt</label>
+            <input
+              type="date"
+              value={date}
+              onChange={(event) => setDate(event.target.value)}
             />
             <button type="submit">Enregistrer</button>
           </form>
@@ -141,27 +126,11 @@ export default function Accueil() {
               <p>{book.author}</p>
               <p>{book.year}</p>
               <p>{book.resume}</p>
-              <p>{book.isBorrowed ? book.loan_date.split("T")[0] : ""}</p>
+              <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
 
               <Link to={`/book/${book.id}`} key={book.id}>
-                <button type="button">Contacter l'emprunteur</button>
+                <button type="button">En savoir plus</button>
               </Link>
-              <button type="submit" key={book.id} onClick={deleteModal}>
-                Le livre a été rendu
-              </button>
-              {showDeleteModal && (
-                <div className="modal">
-                  <div className="modal-content">
-                    <p>Êtes-vous sûr de vouloir supprimer ces données ?</p>
-                    <button type="button" onClick={handleConfirmDelete}>
-                      Oui
-                    </button>
-                    <button type="button" onClick={handleCancelDelete}>
-                      Annuler
-                    </button>
-                  </div>
-                </div>
-              )}
             </button>
           ))}
         </div>
