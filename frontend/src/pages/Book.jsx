@@ -1,17 +1,27 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import moment from "moment";
 import instance from "../utils/instance";
 import "./Book.scss";
 
 export default function Book() {
   const [book, setBook] = useState([]);
-  const [borrower, setBorrower] = useState([]);
   const [titleBook, setTitleBook] = useState("");
   const [authorBook, setAuthorBook] = useState("");
   const [yearBook, setYearBook] = useState("");
   const [resumeBook, setResumeBook] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [dateBook, setDateBook] = useState("");
+
+  const [borrower, setBorrower] = useState([]);
+  const [firstnameBorrower, setFirstnameBorrower] = useState("");
+  const [lastnameBorrower, setLastnameBorrower] = useState("");
+  const [emailBorrower, setEmailBorrower] = useState("");
+  const [phoneNumberBorrower, setPhoneNumberBorrower] = useState("");
+
+  const [isEditingBook, setIsEditingBook] = useState(false);
+  const [isEditingBorrower, setIsEditingBorrower] = useState(false);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { id } = useParams();
 
@@ -39,12 +49,8 @@ export default function Book() {
     getData();
   }, []);
 
-  const toggleModal = () => {
-    setShowModal(!showModal);
-  };
-
-  function handleEdit() {
-    setIsEditing(!isEditing);
+  function handleEditBook() {
+    setIsEditingBook(!isEditingBook);
   }
 
   useEffect(() => {
@@ -53,12 +59,13 @@ export default function Book() {
       setAuthorBook(book.author);
       setYearBook(book.year);
       setResumeBook(book.resume);
+      setDateBook(book.loan_date);
     }
   }, [book]);
 
-  function handleUpdate(e) {
+  function handleUpdateBook(e) {
     e.preventDefault();
-    setIsEditing(false);
+    setIsEditingBook(false);
     instance
       .put(`/book/${id}`, {
         title: titleBook,
@@ -66,7 +73,7 @@ export default function Book() {
         year: yearBook,
         resume: resumeBook,
         isBorrowed: book.isBorrowed,
-        loan_date: book.loan_date.split("T")[0],
+        loan_date: dateBook.split("T")[0],
         borrower_id: book.borrower_id,
       })
       .then((res) => {
@@ -78,11 +85,66 @@ export default function Book() {
       });
   }
 
+  function handleEditBorrower() {
+    setIsEditingBorrower(!isEditingBorrower);
+  }
+
+  useEffect(() => {
+    if (borrower.length !== 0) {
+      setFirstnameBorrower(borrower.firstname);
+      setLastnameBorrower(borrower.lastname);
+      setEmailBorrower(borrower.email);
+      setPhoneNumberBorrower(borrower.phone_number);
+    }
+  }, [borrower]);
+
+  function handleUpdateBorrower(e) {
+    e.preventDefault();
+    setIsEditingBorrower(false);
+    instance
+      .put(`/borrower/${book.borrower_id}`, {
+        firstname: firstnameBorrower,
+        lastname: lastnameBorrower,
+        email: emailBorrower,
+        phone_number: phoneNumberBorrower,
+      })
+      .then((res) => {
+        console.warn(res);
+        getData();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function handleDelete() {
+    instance
+      .delete(`/book/${id}`)
+      .then(() => {
+        // Navigate to home page after successful deletion
+        window.location.href = "/accueil";
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  const deleteModal = () => {
+    setShowDeleteModal(!showDeleteModal);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(!showDeleteModal);
+  };
+
   return (
     <section className="container">
       <div>
-        {isEditing ? (
-          <form onSubmit={handleUpdate}>
+        {isEditingBook ? (
+          <form onSubmit={handleUpdateBook}>
+            <label htmlFor="date">
+              Modifier les informations concernant le livre
+            </label>
             <input
               type="text"
               value={titleBook}
@@ -103,36 +165,89 @@ export default function Book() {
               value={resumeBook}
               onChange={(event) => setResumeBook(event.target.value)}
             />
+            <label htmlFor="date">Date d'emprunt</label>
+            <input
+              type="date"
+              value={dateBook}
+              onChange={(event) => setDateBook(event.target.value)}
+            />
             <button type="submit">Enregistrer</button>
           </form>
         ) : (
           <section className="book">
+            <h2>Informations concernant le livre</h2>
             <h3>{book.title}</h3>
             <p>{book.author}</p>
             <p>{book.year}</p>
             <p>{book.resume}</p>
-            <p>{book.loan_date}</p>
-            <p>
-              {borrower.firstname} {borrower.lastname}
-            </p>
+            <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
             <button
               type="submit"
               onClick={() => {
-                handleEdit();
+                handleEditBook();
               }}
             >
-              Modifier les informations
+              Modifier les informations concernant le livre
             </button>
-            <button type="button" onClick={() => toggleModal()}>
-              Contacter l'emprunteur
-            </button>
-            {showModal && (
-              <div className="modal_form">
-                <p>{borrower.phone_number}</p>
-                <p>{borrower.email}</p>
-              </div>
-            )}
           </section>
+        )}
+
+        {isEditingBorrower ? (
+          <form onSubmit={handleUpdateBorrower}>
+            <label htmlFor="text">
+              Modifier les informations concernant l'emprunteur
+            </label>
+            <input
+              type="text"
+              value={firstnameBorrower}
+              onChange={(event) => setFirstnameBorrower(event.target.value)}
+            />
+            <input
+              type="text"
+              value={lastnameBorrower}
+              onChange={(event) => setLastnameBorrower(event.target.value)}
+            />
+            <input
+              type="text"
+              value={emailBorrower}
+              onChange={(event) => setEmailBorrower(event.target.value)}
+            />
+            <input
+              type="text"
+              value={phoneNumberBorrower}
+              onChange={(event) => setPhoneNumberBorrower(event.target.value)}
+            />
+            <button type="submit">Enregistrer</button>
+          </form>
+        ) : (
+          <section className="borrower">
+            <h2>Informations concernant l'emprunteur</h2>
+            <p>
+              {borrower.firstname} {borrower.lastname}
+            </p>
+            <p>{borrower.phone_number}</p>
+            <p>{borrower.email}</p>
+            <button type="submit" onClick={() => handleEditBorrower()}>
+              Modifier les informations concernant l'emprunteur
+            </button>
+          </section>
+        )}
+
+        <button type="submit" key={book.id} onClick={deleteModal}>
+          Le livre a été rendu
+        </button>
+        {showDeleteModal && (
+          <div className="modal">
+            <div className="modal-content">
+              <p>Êtes-vous sûr de vouloir supprimer cet emprunt ?</p>
+              <button type="button" onClick={() => handleDelete(book.id)}>
+                Oui
+              </button>
+              <button type="button" onClick={handleCancelDelete}>
+                Annuler
+              </button>
+            </div>
+          </div>
         )}
       </div>
       <Link to="/accueil">

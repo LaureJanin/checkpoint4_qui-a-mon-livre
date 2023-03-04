@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import instance from "../utils/instance";
 import "./Accueil.scss";
 
 export default function Accueil() {
-  const [active, setActive] = useState(1);
   const [books, setBooks] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [year, setYear] = useState("");
   const [resume, setResume] = useState("");
+  const [date, setDate] = useState("");
 
   const getData = () => {
     instance
@@ -28,34 +31,8 @@ export default function Accueil() {
     getData();
   }, []);
 
-  function handleDelete(id) {
-    instance
-      .delete(`/book/${id}`)
-      .then(() => getData())
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-
-  const selectCard = (id) => {
-    setActive((id - 1) % books.length);
-  };
-
   const toggleModal = () => {
     setShowModal(!showModal);
-  };
-
-  const deleteModal = () => {
-    setShowDeleteModal(!showDeleteModal);
-  };
-
-  const handleConfirmDelete = () => {
-    setShowDeleteModal(false);
-    handleDelete();
-  };
-
-  const handleCancelDelete = () => {
-    setShowDeleteModal(false);
   };
 
   function handleNewBook(e) {
@@ -67,8 +44,8 @@ export default function Accueil() {
         year,
         resume,
         isBorrowed: true,
-        loan_date: "2023/06/02",
-        borrower_id: 2,
+        loan_date: date,
+        borrower_id: 1,
       })
       .then(() => {
         setBooks(books);
@@ -83,88 +60,90 @@ export default function Accueil() {
   return (
     <section className="container">
       <h1>Vos livres empruntés</h1>
-      <div className="button">
+      <div>
         {showModal ? (
-          <form className="modal_form" onSubmit={handleNewBook}>
-            <p>Enregistrer un nouvel emprunt</p>
-            <input
-              type="text"
-              value={title}
-              placeholder="Titre"
-              onChange={(event) => setTitle(event.target.value)}
-            />
-            <input
-              type="text"
-              value={author}
-              placeholder="Auteur"
-              onChange={(event) => setAuthor(event.target.value)}
-            />
-            <input
-              type="text"
-              value={year}
-              placeholder="Année"
-              onChange={(event) => setYear(event.target.value)}
-            />
-            <input
-              type="text"
-              value={resume}
-              placeholder="Résumé"
-              onChange={(event) => setResume(event.target.value)}
-            />
-            <button type="submit">Enregistrer</button>
-          </form>
+          <div>
+            <div className="overlay" />
+            <form className="modal_form" onSubmit={handleNewBook}>
+              <button
+                type="button"
+                className="close-button"
+                onClick={toggleModal}
+              >
+                {" "}
+                X
+              </button>
+              <p>Enregistrer un nouvel emprunt</p>
+              <input
+                type="text"
+                value={title}
+                placeholder="Titre"
+                onChange={(event) => setTitle(event.target.value)}
+              />
+              <input
+                type="text"
+                value={author}
+                placeholder="Auteur"
+                onChange={(event) => setAuthor(event.target.value)}
+              />
+              <input
+                type="text"
+                value={year}
+                placeholder="Année"
+                onChange={(event) => setYear(event.target.value)}
+              />
+              <input
+                type="text"
+                value={resume}
+                placeholder="Résumé du livre"
+                onChange={(event) => setResume(event.target.value)}
+              />
+              <label htmlFor="date">Date d'emprunt</label>
+              <input
+                type="date"
+                value={date}
+                onChange={(event) => setDate(event.target.value)}
+              />
+              <button type="submit">Enregistrer</button>
+            </form>
+          </div>
         ) : (
-          <button type="button" onClick={() => toggleModal()}>
+          <button
+            className="buttonAdd"
+            type="button"
+            onClick={() => toggleModal()}
+          >
             Ajouter un livre emprunté
           </button>
         )}
       </div>
       <section className="slider-section">
-        <div
+        <Slider
           className="slider-flex"
-          // layoutId="cardId"
-          style={{
-            transition: active === 0 && "none",
-            transform: `translateX(-${(active / books.length) * 100}%)`,
-          }}
+          infinite
+          slidesToShow={3}
+          slidesToScroll={6}
+          centerMode
+          centerPadding="0px"
         >
-          {books.map((book, index) => (
-            <button
-              type="button"
-              className={`card ${
-                active === index ? "card-active" : "".slice("")
-              }`}
-              key={book.id}
-              onClick={() => selectCard(book.id)}
-            >
-              <h3>{book.title}</h3>
-              <p>{book.author}</p>
-              <p>{book.year}</p>
-              <p>{book.resume}</p>
-              <p>{book.isBorrowed ? book.loan_date.split("T")[0] : ""}</p>
+          {books.map((book) => (
+            <div className="cards">
+              <div key={book.id} className="card" role="button" tabIndex="0">
+                <h3>{book.title}</h3>
+                <p>{book.author}</p>
+                <p>{book.year}</p>
+                <p>{book.resume}</p>
+                <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
 
-              <Link to={`/book/${book.id}`} key={book.id}>
-                <button type="button">Contacter l'emprunteur</button>
-              </Link>
-              <button type="submit" key={book.id} onClick={deleteModal}>
-                Le livre a été rendu
-              </button>
-              {showDeleteModal && (
-                <div className="modal">
-                  <div className="modal-content">
-                    <p>Êtes-vous sûr de vouloir supprimer ces données ?</p>
-                    <button type="button" onClick={handleConfirmDelete}>
-                      Oui
-                    </button>
-                    <button type="button" onClick={handleCancelDelete}>
-                      Annuler
-                    </button>
-                  </div>
-                </div>
-              )}
-            </button>
+                <Link to={`/book/${book.id}`} key={book.id}>
+                  <button className="buttonKnow" type="button">
+                    En savoir plus
+                  </button>
+                </Link>
+              </div>
+            </div>
           ))}
-        </div>
+        </Slider>
       </section>
     </section>
   );

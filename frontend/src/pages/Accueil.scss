@@ -1,73 +1,108 @@
 .container {
-  display: flex;
-  flex-direction: column;
+  overflow: hidden;
 
   h1 {
-    margin-top: 1rem;
+    margin-top: 2rem;
     margin-bottom: 1rem;
+    font-size: 2rem;
   }
 
-  .slider-section {
-    // position: relative;
-    width: 80%;
-    margin: auto;
-  }
-
-  .slider-section::after {
-    content: "";
-    display: block;
-    width: 100%;
+  .buttonAdd {
+    width: 15rem;
     height: 5rem;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-  }
-
-  .slider-flex {
-    // position: absolute;
-    display: flex;
-    // margin-top: 2rem;
-    transition: transform 3000ms cubic-bezier(0.19, 1, 0.22, 1);
-
-    .card {
-      flex: 1;
-      opacity: 0.6;
-      transform: scale(0.8);
-      min-width: 20rem;
-      padding: 0%;
-      transition: opacity 3000ms cubic-bezier(0.19, 1, 0.22, 1);
-      height: 35rem;
-      background-color: #5a5757;
-      border-radius: 2%;
-      border: none;
-      box-shadow: 0 10px 15px 10px rgba(0, 0, 0, 0.1),
-        0 4px 6px 8px rgba(1, 1, 1, 0.05);
-    }
-
-    .card.card-active {
-      opacity: 1;
-      transform: scale(1.1);
-      padding: 0%;
-    }
-  }
-  button {
-    width: 12rem;
-    height: 2rem;
     text-align: center;
     vertical-align: middle;
     background-color: #c9768f;
     color: white;
+    font-size: 18px;
     border-radius: 5px;
     border: none;
-    margin-bottom: 1rem;
+    margin-top: 1rem;
   }
 
-  button:hover {
+  .buttonAdd:hover {
     background-color: #7b7373;
     cursor: pointer;
   }
-  button:active {
+  .buttonAdd:active {
     transform: translateY(2px);
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 2;
+  }
+
+  .modal_form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 5rem;
+    height: 35rem;
+    z-index: 9999;
+    .close-button {
+      box-shadow: none;
+      margin: 0;
+      width: 1rem;
+      align-self: right;
+    }
+    p {
+      font-size: 20px;
+    }
+  }
+
+  .slider-section {
+    width: 90%;
+    margin: auto;
+    .slider-flex {
+      width: 80%;
+      margin: auto;
+      padding-left: 60px;
+      padding-right: 60px;
+
+      .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 700px;
+        width: 80%;
+        padding-left: 3rem;
+        border-radius: 5%;
+        cursor: pointer;
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+
+      .slick-prev:before,
+      .slick-next:before {
+        font-size: 25px;
+        color: black;
+      }
+
+      .buttonKnow {
+        width: 10rem;
+        height: 3rem;
+        text-align: center;
+        vertical-align: middle;
+        background-color: #c9768f;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+      }
+      .buttonKnow:hover {
+        background-color: #7b7373;
+        transform: translateY(2px);
+      }
+    }
   }
 }
