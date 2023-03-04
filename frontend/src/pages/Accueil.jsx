@@ -70,10 +70,9 @@ export default function Accueil() {
                 className="close-button"
                 onClick={toggleModal}
               >
-                {" "}
                 X
               </button>
-              <p>Enregistrer un nouvel emprunt</p>
+              <label htmlFor="text">Enregistrer un nouvel emprunt</label>
               <input
                 type="text"
                 value={title}

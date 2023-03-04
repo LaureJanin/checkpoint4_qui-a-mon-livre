@@ -139,9 +139,18 @@ export default function Book() {
 
   return (
     <section className="container">
-      <div>
-        {isEditingBook ? (
-          <form onSubmit={handleUpdateBook}>
+      <h1>Emprunt en cours</h1>
+      {isEditingBook ? (
+        <div>
+          <div className="overlay" />
+          <form className="modal_form" onSubmit={handleUpdateBook}>
+            <button
+              type="button"
+              className="close-button"
+              onClick={handleEditBook}
+            >
+              X
+            </button>
             <label htmlFor="date">
               Modifier les informations concernant le livre
             </label>
@@ -173,85 +182,95 @@ export default function Book() {
             />
             <button type="submit">Enregistrer</button>
           </form>
-        ) : (
-          <section className="book">
-            <h2>Informations concernant le livre</h2>
-            <h3>{book.title}</h3>
-            <p>{book.author}</p>
-            <p>{book.year}</p>
-            <p>{book.resume}</p>
-            <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
-            <button
-              type="submit"
-              onClick={() => {
-                handleEditBook();
-              }}
-            >
-              Modifier les informations concernant le livre
-            </button>
-          </section>
-        )}
+        </div>
+      ) : (
+        <section className="book">
+          <h2>Informations concernant le livre</h2>
+          <h3>{book.title}</h3>
+          <p>{book.author}</p>
+          <p>{book.year}</p>
+          <p>{book.resume}</p>
+          <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
+          <button
+            className="buttonModif"
+            type="submit"
+            onClick={() => {
+              handleEditBook();
+            }}
+          >
+            Modifier
+          </button>
+        </section>
+      )}
 
-        {isEditingBorrower ? (
-          <form onSubmit={handleUpdateBorrower}>
-            <label htmlFor="text">
-              Modifier les informations concernant l'emprunteur
-            </label>
-            <input
-              type="text"
-              value={firstnameBorrower}
-              onChange={(event) => setFirstnameBorrower(event.target.value)}
-            />
-            <input
-              type="text"
-              value={lastnameBorrower}
-              onChange={(event) => setLastnameBorrower(event.target.value)}
-            />
-            <input
-              type="text"
-              value={emailBorrower}
-              onChange={(event) => setEmailBorrower(event.target.value)}
-            />
-            <input
-              type="text"
-              value={phoneNumberBorrower}
-              onChange={(event) => setPhoneNumberBorrower(event.target.value)}
-            />
-            <button type="submit">Enregistrer</button>
-          </form>
-        ) : (
-          <section className="borrower">
-            <h2>Informations concernant l'emprunteur</h2>
-            <p>
-              {borrower.firstname} {borrower.lastname}
-            </p>
-            <p>{borrower.phone_number}</p>
-            <p>{borrower.email}</p>
-            <button type="submit" onClick={() => handleEditBorrower()}>
-              Modifier les informations concernant l'emprunteur
-            </button>
-          </section>
-        )}
+      {isEditingBorrower ? (
+        <form onSubmit={handleUpdateBorrower}>
+          <label htmlFor="text">
+            Modifier les informations concernant l'emprunteur
+          </label>
+          <input
+            type="text"
+            value={firstnameBorrower}
+            onChange={(event) => setFirstnameBorrower(event.target.value)}
+          />
+          <input
+            type="text"
+            value={lastnameBorrower}
+            onChange={(event) => setLastnameBorrower(event.target.value)}
+          />
+          <input
+            type="text"
+            value={emailBorrower}
+            onChange={(event) => setEmailBorrower(event.target.value)}
+          />
+          <input
+            type="text"
+            value={phoneNumberBorrower}
+            onChange={(event) => setPhoneNumberBorrower(event.target.value)}
+          />
+          <button type="submit">Enregistrer</button>
+        </form>
+      ) : (
+        <section className="book">
+          <h2>Informations concernant l'emprunteur</h2>
+          <p>
+            {borrower.firstname} {borrower.lastname}
+          </p>
+          <p>{borrower.phone_number}</p>
+          <p>{borrower.email}</p>
+          <button
+            className="buttonModif"
+            type="submit"
+            onClick={() => handleEditBorrower()}
+          >
+            Modifier
+          </button>
+        </section>
+      )}
 
-        <button type="submit" key={book.id} onClick={deleteModal}>
-          Le livre a été rendu
-        </button>
-        {showDeleteModal && (
-          <div className="modal">
-            <div className="modal-content">
-              <p>Êtes-vous sûr de vouloir supprimer cet emprunt ?</p>
-              <button type="button" onClick={() => handleDelete(book.id)}>
-                Oui
-              </button>
-              <button type="button" onClick={handleCancelDelete}>
-                Annuler
-              </button>
-            </div>
+      <button
+        type="submit"
+        className="buttonReturn"
+        key={book.id}
+        onClick={deleteModal}
+      >
+        Le livre a été rendu
+      </button>
+      {showDeleteModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <p>Êtes-vous sûr de vouloir supprimer cet emprunt ?</p>
+            <button type="button" onClick={() => handleDelete(book.id)}>
+              Oui
+            </button>
+            <button type="button" onClick={handleCancelDelete}>
+              Annuler
+            </button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
       <Link to="/accueil">
-        <button className="buttonHome" type="button">
+        <button className="buttonReturn" type="button">
           Home
         </button>
       </Link>

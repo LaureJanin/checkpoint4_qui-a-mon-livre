@@ -1,6 +1,4 @@
 .container {
-  overflow: hidden;
-
   h1 {
     margin-top: 2rem;
     margin-bottom: 1rem;
@@ -9,7 +7,7 @@
 
   .buttonAdd {
     width: 15rem;
-    height: 5rem;
+    height: 4rem;
     text-align: center;
     vertical-align: middle;
     background-color: #c9768f;
@@ -43,23 +41,31 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    margin-top: 5rem;
-    height: 35rem;
+    height: 30rem;
     z-index: 9999;
+
     .close-button {
       box-shadow: none;
-      margin: 0;
+      margin-top: 0;
+      margin-left: 22rem;
+      margin-bottom: 0;
       width: 1rem;
-      align-self: right;
+      color: white;
     }
-    p {
+    .close-button:hover {
+      background-color: transparent;
+    }
+    label {
       font-size: 20px;
+      color: #3a373e;
+      font-family: "Jost";
     }
   }
 
   .slider-section {
     width: 90%;
     margin: auto;
+
     .slider-flex {
       width: 80%;
       margin: auto;
@@ -74,7 +80,8 @@
         height: 700px;
         width: 80%;
         padding-left: 3rem;
-        border-radius: 5%;
+        padding-bottom: 1rem;
+        padding-top: 1rem;
         cursor: pointer;
         &:hover {
           transform: scale(1.1);
