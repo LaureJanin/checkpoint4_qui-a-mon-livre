@@ -180,7 +180,9 @@ export default function Book() {
               value={dateBook}
               onChange={(event) => setDateBook(event.target.value)}
             />
-            <button type="submit">Enregistrer</button>
+            <button className="save" type="submit">
+              Enregistrer
+            </button>
           </form>
         </div>
       ) : (
@@ -204,32 +206,44 @@ export default function Book() {
       )}
 
       {isEditingBorrower ? (
-        <form onSubmit={handleUpdateBorrower}>
-          <label htmlFor="text">
-            Modifier les informations concernant l'emprunteur
-          </label>
-          <input
-            type="text"
-            value={firstnameBorrower}
-            onChange={(event) => setFirstnameBorrower(event.target.value)}
-          />
-          <input
-            type="text"
-            value={lastnameBorrower}
-            onChange={(event) => setLastnameBorrower(event.target.value)}
-          />
-          <input
-            type="text"
-            value={emailBorrower}
-            onChange={(event) => setEmailBorrower(event.target.value)}
-          />
-          <input
-            type="text"
-            value={phoneNumberBorrower}
-            onChange={(event) => setPhoneNumberBorrower(event.target.value)}
-          />
-          <button type="submit">Enregistrer</button>
-        </form>
+        <div>
+          <div className="overlay" />
+          <form className="modal_form" onSubmit={handleUpdateBorrower}>
+            <button
+              type="button"
+              className="close-button"
+              onClick={handleEditBorrower}
+            >
+              X
+            </button>
+            <label htmlFor="text">
+              Modifier les informations concernant l'emprunteur
+            </label>
+            <input
+              type="text"
+              value={firstnameBorrower}
+              onChange={(event) => setFirstnameBorrower(event.target.value)}
+            />
+            <input
+              type="text"
+              value={lastnameBorrower}
+              onChange={(event) => setLastnameBorrower(event.target.value)}
+            />
+            <input
+              type="text"
+              value={emailBorrower}
+              onChange={(event) => setEmailBorrower(event.target.value)}
+            />
+            <input
+              type="text"
+              value={phoneNumberBorrower}
+              onChange={(event) => setPhoneNumberBorrower(event.target.value)}
+            />
+            <button className="save" type="submit">
+              Enregistrer
+            </button>
+          </form>
+        </div>
       ) : (
         <section className="book">
           <h2>Informations concernant l'emprunteur</h2>
@@ -257,13 +271,18 @@ export default function Book() {
         Le livre a été rendu
       </button>
       {showDeleteModal && (
-        <div className="modal">
-          <div className="modal-content">
+        <div>
+          <div className="overlay" />
+          <div className="modal_form">
             <p>Êtes-vous sûr de vouloir supprimer cet emprunt ?</p>
-            <button type="button" onClick={() => handleDelete(book.id)}>
+            <button
+              className="save"
+              type="button"
+              onClick={() => handleDelete(book.id)}
+            >
               Oui
             </button>
-            <button type="button" onClick={handleCancelDelete}>
+            <button className="save" type="button" onClick={handleCancelDelete}>
               Annuler
             </button>
           </div>
@@ -271,7 +290,7 @@ export default function Book() {
       )}
       <Link to="/accueil">
         <button className="buttonReturn" type="button">
-          Home
+          Accueil
         </button>
       </Link>
     </section>

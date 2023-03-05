@@ -1,4 +1,7 @@
+@import "../assets/_variables.scss";
+
 .container {
+  font-family: $font-stack;
   height: 100%;
   .book {
     width: 30rem;
@@ -50,5 +53,68 @@
   }
   .buttonHome {
     margin-top: 2rem;
+  }
+
+  .modal_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background-color: #c9768f;
+    width: 23rem;
+    height: auto;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 5px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    box-shadow: none;
+
+    .close-button {
+      box-shadow: none;
+      margin-top: 0;
+      margin-left: 19.5rem;
+      width: 1rem;
+      color: white;
+      background-color: transparent;
+      border: none;
+    }
+    .close-button:hover {
+      background-color: transparent;
+    }
+    label {
+      font-size: 20px;
+      color: #3a373e;
+      text-align: center;
+    }
+    p {
+      font-size: 20px;
+      color: #3a373e;
+      text-align: center;
+      margin: 0;
+    }
+    .save {
+      // margin-top: 1rem;
+      width: 10rem;
+      height: 2rem;
+      border-radius: 3px;
+      border: none;
+      font-family: $font-stack;
+      font-size: 18px;
+      color: #3a373e;
+      font-weight: 700;
+      box-shadow: 0 3px 10px 2px rgb(106, 67, 89);
+    }
+    .save:active {
+      transform: translateY(2px);
+    }
+
+    .save:hover {
+      cursor: pointer;
+    }
   }
 }

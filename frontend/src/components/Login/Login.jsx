@@ -31,7 +31,7 @@ export default function Login() {
       <h1 className="login">
         Pour entrer dans la bibliothèque, veuillez renseigner un mot de passe.{" "}
       </h1>
-      <form onSubmit={handleLogin}>
+      <form className="formLogin" onSubmit={handleLogin}>
         <label htmlFor="email">Username </label>
         <input
           type="username"

@@ -103,7 +103,9 @@ export default function Accueil() {
                 value={date}
                 onChange={(event) => setDate(event.target.value)}
               />
-              <button type="submit">Enregistrer</button>
+              <button className="save" type="submit">
+                Enregistrer
+              </button>
             </form>
           </div>
         ) : (
