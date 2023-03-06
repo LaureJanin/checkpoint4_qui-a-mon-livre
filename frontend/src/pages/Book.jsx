@@ -140,128 +140,140 @@ export default function Book() {
   return (
     <section className="container">
       <h1>Emprunt en cours</h1>
-      {isEditingBook ? (
-        <div>
-          <div className="overlay" />
-          <form className="modal_form" onSubmit={handleUpdateBook}>
+      <div className="box">
+        {isEditingBook ? (
+          <div>
+            <div className="overlay" />
+            <form className="modal_form" onSubmit={handleUpdateBook}>
+              <button
+                type="button"
+                className="close-button"
+                onClick={handleEditBook}
+              >
+                X
+              </button>
+              <label htmlFor="date">
+                Modifier les informations concernant le livre
+              </label>
+              <input
+                type="text"
+                value={titleBook}
+                placeholder="Titre du livre"
+                onChange={(event) => setTitleBook(event.target.value)}
+              />
+              <input
+                type="text"
+                value={authorBook}
+                placeholder="Auteur du livre"
+                onChange={(event) => setAuthorBook(event.target.value)}
+              />
+              <input
+                type="text"
+                value={yearBook}
+                placeholder="Année de parution du livre"
+                onChange={(event) => setYearBook(event.target.value)}
+              />
+              <textarea
+                type="text"
+                value={resumeBook}
+                placeholder="Résumé du livre"
+                onChange={(event) => setResumeBook(event.target.value)}
+              />
+              <label htmlFor="date">Date d'emprunt</label>
+              <input
+                type="date"
+                value={dateBook}
+                onChange={(event) => setDateBook(event.target.value)}
+              />
+              <button className="save" type="submit">
+                Enregistrer
+              </button>
+            </form>
+          </div>
+        ) : (
+          <section className="book">
+            <h2>Informations concernant le livre</h2>
+            <h3>{book.title}</h3>
+            <p>{book.author}</p>
+            <p>{book.year}</p>
+            <p>{book.resume}</p>
+            <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
             <button
-              type="button"
-              className="close-button"
-              onClick={handleEditBook}
+              className="buttonModif"
+              type="submit"
+              onClick={() => {
+                handleEditBook();
+              }}
             >
-              X
+              Modifier
             </button>
-            <label htmlFor="date">
-              Modifier les informations concernant le livre
-            </label>
-            <input
-              type="text"
-              value={titleBook}
-              onChange={(event) => setTitleBook(event.target.value)}
-            />
-            <input
-              type="text"
-              value={authorBook}
-              onChange={(event) => setAuthorBook(event.target.value)}
-            />
-            <input
-              type="text"
-              value={yearBook}
-              onChange={(event) => setYearBook(event.target.value)}
-            />
-            <input
-              type="text"
-              value={resumeBook}
-              onChange={(event) => setResumeBook(event.target.value)}
-            />
-            <label htmlFor="date">Date d'emprunt</label>
-            <input
-              type="date"
-              value={dateBook}
-              onChange={(event) => setDateBook(event.target.value)}
-            />
-            <button className="save" type="submit">
-              Enregistrer
-            </button>
-          </form>
-        </div>
-      ) : (
-        <section className="book">
-          <h2>Informations concernant le livre</h2>
-          <h3>{book.title}</h3>
-          <p>{book.author}</p>
-          <p>{book.year}</p>
-          <p>{book.resume}</p>
-          <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
-          <button
-            className="buttonModif"
-            type="submit"
-            onClick={() => {
-              handleEditBook();
-            }}
-          >
-            Modifier
-          </button>
-        </section>
-      )}
+          </section>
+        )}
 
-      {isEditingBorrower ? (
-        <div>
-          <div className="overlay" />
-          <form className="modal_form" onSubmit={handleUpdateBorrower}>
+        {isEditingBorrower ? (
+          <div>
+            <div className="overlay" />
+            <form className="modal_form" onSubmit={handleUpdateBorrower}>
+              <button
+                type="button"
+                className="close-button"
+                onClick={handleEditBorrower}
+              >
+                X
+              </button>
+              <label htmlFor="text">
+                Modifier les informations concernant l'emprunteur
+              </label>
+              <input
+                type="text"
+                placeholder="Prénom"
+                value={firstnameBorrower}
+                onChange={(event) => setFirstnameBorrower(event.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Nom"
+                value={lastnameBorrower}
+                onChange={(event) => setLastnameBorrower(event.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Email"
+                value={emailBorrower}
+                onChange={(event) => setEmailBorrower(event.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Numéro de téléphone"
+                value={phoneNumberBorrower}
+                onChange={(event) => setPhoneNumberBorrower(event.target.value)}
+              />
+              <button className="save" type="submit">
+                Enregistrer
+              </button>
+            </form>
+          </div>
+        ) : (
+          <section className="book">
+            <h2>Informations concernant l'emprunteur</h2>
+            <h3>Le livre a été emprunté par :</h3>
+            <p>
+              {borrower.firstname} {borrower.lastname}
+            </p>
+            <h3>Numéro de téléphone de l'emprunteur :</h3>
+            <p>{borrower.phone_number}</p>
+            <h3>Adresse email de l'emprunteur :</h3>
+            <p>{borrower.email}</p>
             <button
-              type="button"
-              className="close-button"
-              onClick={handleEditBorrower}
+              className="buttonModif"
+              type="submit"
+              onClick={() => handleEditBorrower()}
             >
-              X
+              Modifier
             </button>
-            <label htmlFor="text">
-              Modifier les informations concernant l'emprunteur
-            </label>
-            <input
-              type="text"
-              value={firstnameBorrower}
-              onChange={(event) => setFirstnameBorrower(event.target.value)}
-            />
-            <input
-              type="text"
-              value={lastnameBorrower}
-              onChange={(event) => setLastnameBorrower(event.target.value)}
-            />
-            <input
-              type="text"
-              value={emailBorrower}
-              onChange={(event) => setEmailBorrower(event.target.value)}
-            />
-            <input
-              type="text"
-              value={phoneNumberBorrower}
-              onChange={(event) => setPhoneNumberBorrower(event.target.value)}
-            />
-            <button className="save" type="submit">
-              Enregistrer
-            </button>
-          </form>
-        </div>
-      ) : (
-        <section className="book">
-          <h2>Informations concernant l'emprunteur</h2>
-          <p>
-            {borrower.firstname} {borrower.lastname}
-          </p>
-          <p>{borrower.phone_number}</p>
-          <p>{borrower.email}</p>
-          <button
-            className="buttonModif"
-            type="submit"
-            onClick={() => handleEditBorrower()}
-          >
-            Modifier
-          </button>
-        </section>
-      )}
-
+          </section>
+        )}
+      </div>
       <button
         type="submit"
         className="buttonReturn"
@@ -288,6 +300,7 @@ export default function Book() {
           </div>
         </div>
       )}
+
       <Link to="/accueil">
         <button className="buttonReturn" type="button">
           Accueil

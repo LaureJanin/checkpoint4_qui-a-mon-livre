@@ -12,7 +12,7 @@ CREATE TABLE borrower (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   firstname VARCHAR(100) NULL,
   lastname VARCHAR(150) NULL,
-  email VARCHAR(80) NOT NULL,
+  email VARCHAR(80) NULL,
   phone_number VARCHAR(20) NULL
 );
 
@@ -24,7 +24,7 @@ CREATE TABLE book (
   resume TEXT NULL,
   isBorrowed BOOLEAN NOT NULL DEFAULT FALSE,
   loan_date DATE NULL,
-  borrower_id INT,
+  borrower_id INT NULL,
   CONSTRAINT fk_book_borrower
   FOREIGN KEY (borrower_id)
   REFERENCES borrower(id)

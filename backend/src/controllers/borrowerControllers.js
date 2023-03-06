@@ -52,7 +52,8 @@ const add = (req, res) => {
   models.borrower
     .insert(borrower)
     .then(([result]) => {
-      res.location(`/borrower/${result.insertId}`).sendStatus(201);
+      const borrowerId = result.insertId;
+      res.status(201).json({ id: borrowerId });
     })
     .catch((err) => {
       console.error(err);

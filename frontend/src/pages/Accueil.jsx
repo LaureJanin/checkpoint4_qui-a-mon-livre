@@ -38,19 +38,33 @@ export default function Accueil() {
   function handleNewBook(e) {
     e.preventDefault();
     instance
-      .post(`/book`, {
-        title,
-        author,
-        year,
-        resume,
-        isBorrowed: true,
-        loan_date: date,
-        borrower_id: 1,
+      .post(`/borrower`, {
+        firstname: "John",
+        lastname: "Doe",
+        email: "john.doe@mail.com",
+        phone_number: "01 02 03 04 05",
       })
-      .then(() => {
-        setBooks(books);
-        getData();
-        setShowModal(!showModal);
+      .then((response) => {
+        console.warn(response.data);
+        const borrowerId = response.data.id;
+        instance
+          .post(`/book`, {
+            title,
+            author,
+            year,
+            resume,
+            isBorrowed: true,
+            loan_date: date,
+            borrower_id: borrowerId,
+          })
+          .then(() => {
+            setBooks(books);
+            getData();
+            setShowModal(!showModal);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       })
       .catch((err) => {
         console.error(err);
@@ -91,10 +105,10 @@ export default function Accueil() {
                 placeholder="Année"
                 onChange={(event) => setYear(event.target.value)}
               />
-              <input
+              <textarea
                 type="text"
                 value={resume}
-                placeholder="Résumé du livre"
+                placeholder="Résumé du livre..."
                 onChange={(event) => setResume(event.target.value)}
               />
               <label htmlFor="date">Date d'emprunt</label>
@@ -122,13 +136,22 @@ export default function Accueil() {
         <Slider
           className="slider-flex"
           infinite
-          slidesToShow={3}
-          slidesToScroll={6}
           centerMode
           centerPadding="0px"
+          slidesToShow={3}
+          slidesToScroll={1}
+          responsive={[
+            {
+              breakpoint: 768,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+              },
+            },
+          ]}
         >
           {books.map((book) => (
-            <div className="cards">
+            <div key={book.id} className="cards">
               <div key={book.id} className="card" role="button" tabIndex="0">
                 <h3>{book.title}</h3>
                 <p>{book.author}</p>
@@ -146,6 +169,23 @@ export default function Accueil() {
           ))}
         </Slider>
       </section>
+      <ul className="card-list">
+        {books.map((book) => (
+          <div key={book.id} className="card" role="button" tabIndex="0">
+            <h3>{book.title}</h3>
+            <p>{book.author}</p>
+            <p>{book.year}</p>
+            <p>{book.resume}</p>
+            <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
+
+            <Link to={`/book/${book.id}`} key={book.id}>
+              <button className="buttonKnow" type="button">
+                En savoir plus
+              </button>
+            </Link>
+          </div>
+        ))}
+      </ul>
     </section>
   );
 }
