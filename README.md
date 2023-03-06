@@ -1,5 +1,11 @@
 ## Concept
 
+Cette petite application permet de créer une bibliothèque de livres empruntés.
+Entrez les informations concernant le livre, puis celles concernant l'emprunteur et vous saurez désormais où sont vos livres, qui les a empruntés et depuis combien de temps.
+Les informations concernant l'emprunteur vous permettent de le contacter en cas de besoin ou pour récupérer votre livres.
+
+## Template
+
 This template is meant to serve as a foundation for every P2/P3 following the React-Express-MySQL stack, as learned in Wild Code School.
 It's pre-configured with a set of tools which'll help students produce industry-quality and easier-to-maintain code, while staying as simple as possible to use.
 

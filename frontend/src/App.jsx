@@ -1,14 +1,20 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Background from "./components/Background/Background";
 import Home from "./pages/Home";
+import Accueil from "./pages/Accueil";
+import Book from "./pages/Book";
 
-import "./App.css";
-
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <Home />
-      <p>coucou</p>
-    </div>
+    <>
+      <Background />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/accueil" element={<Accueil />} />
+          <Route path="/book/:id" element={<Book />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
-
-export default App;

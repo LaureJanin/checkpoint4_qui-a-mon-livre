@@ -1,0 +1,78 @@
+@import "../../assets/_variables.scss";
+
+.container {
+  font-family: $font-stack;
+  color: $primary-color;
+
+  .login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8rem;
+
+    h1 {
+      font-weight: 300;
+    }
+
+    .formLogin {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      background-color: #c9768f;
+      width: 24rem;
+      height: 20rem;
+      border-radius: 5px;
+      box-shadow: #c9768f;
+      box-shadow: 0 3px 10px 2px rgb(48, 43, 43);
+      margin-top: 2rem;
+      label {
+        font-size: 20px;
+        color: #3a373e;
+      }
+
+      input {
+        width: 17rem;
+        height: 2rem;
+        border-radius: 3px;
+        border: none;
+      }
+
+      button {
+        margin-top: 1rem;
+        width: 10rem;
+        height: 2rem;
+        border-radius: 3px;
+        border: none;
+        font-family: $font-stack;
+        font-size: 18px;
+        color: #3a373e;
+        font-weight: 700;
+        box-shadow: 0 3px 10px 2px rgb(106, 67, 89);
+      }
+      button:active {
+        transform: translateY(2px);
+      }
+
+      button:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .container {
+    width: 95%;
+    .login {
+      margin-top: 0;
+      h1 {
+        text-align: center;
+      }
+      .formLogin {
+        width: 95%;
+      }
+    }
+  }
+}
