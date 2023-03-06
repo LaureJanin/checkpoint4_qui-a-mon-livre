@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-// import axios from "axios";
+import Cookies from "js-cookie";
 import instance from "../../utils/instance";
 import Notify from "../../utils/notification";
 
@@ -19,8 +19,10 @@ export default function Login() {
     e.preventDefault();
     instance
       .post("/login", loginAdmin)
-      .then((res) => console.warn(res.data))
-      .then(() => navigate("/accueil"))
+      .then(({ data: { token } }) => {
+        Cookies.set("admin-auth", token);
+        navigate("/accueil");
+      })
       .catch((err) =>
         console.error(err, Notify.error("Mauvaises informations ! ❌"))
       );
