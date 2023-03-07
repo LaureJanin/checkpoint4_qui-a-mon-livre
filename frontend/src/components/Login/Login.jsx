@@ -20,7 +20,7 @@ export default function Login() {
     instance
       .post("/login", loginAdmin)
       .then(({ data: { token } }) => {
-        Cookies.set("admin-auth", token);
+        Cookies.set("admin_auth_frontend", token);
         navigate("/accueil");
       })
       .catch((err) =>
