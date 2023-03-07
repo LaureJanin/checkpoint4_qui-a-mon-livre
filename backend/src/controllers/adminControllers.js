@@ -1,5 +1,5 @@
 const { verify, hash, argon2id } = require("argon2");
-const { generateToken } = require("../services/jwt");
+const jwt = require("jsonwebtoken");
 const models = require("../models");
 
 const browse = (req, res) => {
@@ -65,14 +65,13 @@ const log = (req, res) => {
       verify(admin.password, password)
         .then((match) => {
           if (match) {
-            const token = generateToken({
-              id: admin.id,
-              username: admin.username,
-            });
-            return res
-              .cookie("admin_auth", token, { httpOnly: true, secure: false })
-              .status(200)
-              .json({ token, success: "Admin logged" });
+            const token = jwt.sign(
+              { username: admin.username },
+              process.env.JWT_SECRET,
+              { expiresIn: "1h" }
+            );
+            res.cookie("token", token, { httpOnly: true, maxAge: 3600000 });
+            return res.status(200).json({ success: "Admin logged" });
           }
           return res.status(403).json({ error: "password incorrect" });
         })

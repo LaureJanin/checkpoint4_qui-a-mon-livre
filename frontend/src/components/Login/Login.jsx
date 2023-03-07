@@ -1,12 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-// import axios from "axios";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 import instance from "../../utils/instance";
-import Notify from "../../utils/notification";
+import "react-toastify/dist/ReactToastify.css";
 
 import "./Login.scss";
+import "../../assets/_variables.scss";
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
   const [loginAdmin, setLoginAdmin] = useState({ username: "", password: "" });
   const navigate = useNavigate();
 
@@ -19,11 +22,20 @@ export default function Login() {
     e.preventDefault();
     instance
       .post("/login", loginAdmin)
-      .then((res) => console.warn(res.data))
-      .then(() => navigate("/accueil"))
-      .catch((err) =>
-        console.error(err, Notify.error("Mauvaises informations ! ❌"))
-      );
+      .then(({ data: { token } }) => {
+        Cookies.set("admin_auth_frontend", token);
+        navigate("/accueil");
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("Pseudo ou mot de passe incorrect !", {
+          className: "custom-toast-error specific_class",
+        });
+      });
+  };
+
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -42,11 +54,20 @@ export default function Login() {
           />
           <label htmlFor="mdp">Mot De Passe</label>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             onChange={handleChangeLogin}
             required
           />
+          <label className="showPassword" htmlFor="show-password">
+            <input
+              type="checkbox"
+              name="show-password"
+              id="show-password"
+              onChange={togglePassword}
+            />
+            Show Password
+          </label>
           <button type="submit">Se connecter</button>
         </form>
       </div>
