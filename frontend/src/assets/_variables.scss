@@ -5,4 +5,24 @@
 
 $font-stack: "Jost", sans-serif;
 $font-color: #1a1510;
-$primary-color: #e7e7e7; ;
+$primary-color: #e7e7e7;
+
+.custom-toast-error {
+  background: transparent;
+  color: white;
+  font-family: "Jost";
+  font-size: 20px;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: none;
+  border: 1px solid white;
+}
+.Toastify__close-button {
+  color: #c9768f;
+}
+.Toastify__progress-bar {
+  background-color: #c9768f;
+}
+.Toastify__toast-icon {
+  display: none;
+}
