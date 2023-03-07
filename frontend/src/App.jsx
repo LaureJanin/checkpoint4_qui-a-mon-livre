@@ -9,7 +9,7 @@ import Book from "./pages/Book";
 
 export default function App() {
   function isAuthenticated() {
-    const token = Cookies.get("admin-auth");
+    const token = Cookies.get("admin_auth_frontend");
     return token;
   }
 
@@ -21,7 +21,7 @@ export default function App() {
       }
     }, []);
 
-    return isAuthenticated() ? element : null;
+    return element;
   }
 
   PrivateRoute.propTypes = {
