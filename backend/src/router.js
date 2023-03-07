@@ -5,10 +5,13 @@ const router = express.Router();
 const adminControllers = require("./controllers/adminControllers");
 const borrowerControllers = require("./controllers/borrowerControllers");
 const bookControllers = require("./controllers/bookControllers");
+const authenticateToken = require("./middlewares/authenticate");
 
 // Routes admin
 router.post("/login", adminControllers.log);
 router.post("/register", adminControllers.add);
+
+router.use(authenticateToken);
 
 // Routes borrower
 router.get("/borrower", borrowerControllers.browse);
