@@ -2,9 +2,9 @@ const models = require("../models");
 
 const browse = (req, res) => {
   models.book
-    .findAll()
-    .then(([rows]) => {
-      res.send(rows);
+    .findAll(req.session.adminId)
+    .then((books) => {
+      res.send(books);
     })
     .catch((err) => {
       console.error(err);

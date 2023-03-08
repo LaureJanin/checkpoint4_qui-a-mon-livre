@@ -4,7 +4,7 @@ const models = require("../models");
 
 const browse = (req, res) => {
   models.admin
-    .findAll()
+    .findAll(req.params.book.admin_id)
     .then(([rows]) => {
       res.send(rows);
     })
@@ -70,8 +70,12 @@ const log = (req, res) => {
               process.env.JWT_SECRET,
               { expiresIn: "1h" }
             );
+            req.session.adminId = admin.id;
+            req.session.save();
             res.cookie("token", token, { httpOnly: true, maxAge: 3600000 });
-            return res.status(200).json({ success: "Admin logged" });
+            return res
+              .status(200)
+              .json({ success: "Admin logged", adminId: admin.id });
           }
           return res.status(403).json({ error: "password incorrect" });
         })
