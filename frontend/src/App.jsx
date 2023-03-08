@@ -6,6 +6,7 @@ import Background from "./components/Background/Background";
 import Home from "./pages/Home";
 import Accueil from "./pages/Accueil";
 import Book from "./pages/Book";
+import Register from "./pages/Register";
 
 export default function App() {
   function isAuthenticated() {
@@ -34,6 +35,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
           <Route
             path="/accueil"
             element={<PrivateRoute element={<Accueil />} />}
