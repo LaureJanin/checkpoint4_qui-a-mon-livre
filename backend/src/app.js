@@ -3,11 +3,20 @@ const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const session = require("express-session");
 const router = require("./router");
 
 const app = express();
 
 app.use(cookieParser());
+
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 // use some application-level middlewares
 app.use(

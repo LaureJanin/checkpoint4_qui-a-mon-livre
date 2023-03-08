@@ -5,8 +5,16 @@ class BookManager extends AbstractManager {
     super({ table: "book" });
   }
 
-  findAll() {
-    return this.connection.query(`select * from  ${this.table}`);
+  findAll(adminId) {
+    return this.connection
+      .query(`SELECT * FROM ${this.table} WHERE admin_id = ?`, [adminId])
+      .then(([rows]) => {
+        return rows;
+      })
+      .catch((err) => {
+        console.error(err);
+        throw err;
+      });
   }
 
   findById(id) {
@@ -17,7 +25,7 @@ class BookManager extends AbstractManager {
 
   insert(book) {
     return this.connection.query(
-      `insert into ${this.table} (title, author, year, resume, isBorrowed, loan_date, borrower_id) values (?, ?, ?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (title, author, year, resume, isBorrowed, loan_date, borrower_id, admin_id) values (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         book.title,
         book.author,
@@ -26,13 +34,14 @@ class BookManager extends AbstractManager {
         book.isBorrowed,
         book.loan_date,
         book.borrower_id,
+        book.admin_id,
       ]
     );
   }
 
   update(book) {
     return this.connection.query(
-      `update ${this.table} set title = ?, author = ?, year = ?, resume = ?, isBorrowed = ?, loan_date = ?, borrower_id = ? where id = ?`,
+      `update ${this.table} set title = ?, author = ?, year = ?, resume = ?, isBorrowed = ?, loan_date = ?, borrower_id = ?, admin_id = ? where id = ?`,
       [
         book.title,
         book.author,
@@ -41,6 +50,7 @@ class BookManager extends AbstractManager {
         book.isBorrowed,
         book.loan_date,
         book.borrower_id,
+        book.admin_id,
         book.id,
       ]
     );
