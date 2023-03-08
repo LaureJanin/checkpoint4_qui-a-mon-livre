@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
@@ -70,6 +70,9 @@ export default function Login() {
             Show Password
           </label>
           <button type="submit">Se connecter</button>
+          <Link to="/register">
+            <button type="submit">Se créer un compte</button>
+          </Link>
         </form>
       </div>
     </section>

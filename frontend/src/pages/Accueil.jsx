@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Player } from "@lottiefiles/react-lottie-player";
 import moment from "moment";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import instance from "../utils/instance";
+import pile from "../assets/lottie/pile.json";
 import "./Accueil.scss";
 
 export default function Accueil() {
@@ -15,12 +17,18 @@ export default function Accueil() {
   const [year, setYear] = useState("");
   const [resume, setResume] = useState("");
   const [date, setDate] = useState("");
+  const [isBook, setIsBook] = useState(true);
 
   const getData = () => {
     instance
       .get("/book", books)
       .then((result) => {
         setBooks(result.data);
+        if (result.data.length > 0) {
+          setIsBook(false);
+        } else {
+          setIsBook(true);
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -134,26 +142,60 @@ export default function Accueil() {
           </button>
         )}
       </div>
-      <section className="slider-section">
-        <Slider
-          className="slider-flex"
-          infinite
-          centerMode
-          centerPadding="0px"
-          slidesToShow={3}
-          slidesToScroll={1}
-          responsive={[
-            {
-              breakpoint: 768,
-              settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-              },
-            },
-          ]}
-        >
-          {books.map((book) => (
-            <div key={book.id} className="cards">
+      {isBook ? (
+        <>
+          <p>Vous n'avez pas d'emprunt enregistré</p>
+          <br />
+          <br />
+          <br />
+          <Player autoplay loop src={pile} className="notFoundLottie" />
+        </>
+      ) : (
+        <>
+          <section className="slider-section">
+            <Slider
+              className="slider-flex"
+              infinite
+              centerMode
+              centerPadding="0px"
+              slidesToShow={3}
+              slidesToScroll={1}
+              responsive={[
+                {
+                  breakpoint: 768,
+                  settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                  },
+                },
+              ]}
+            >
+              {books.map((book) => (
+                <div key={book.id} className="cards">
+                  <div
+                    key={book.id}
+                    className="card"
+                    role="button"
+                    tabIndex="0"
+                  >
+                    <h3>{book.title}</h3>
+                    <p>{book.author}</p>
+                    <p>{book.year}</p>
+                    <p>{book.resume}</p>
+                    <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
+
+                    <Link to={`/book/${book.id}`} key={book.id}>
+                      <button className="buttonKnow" type="button">
+                        En savoir plus
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </Slider>
+          </section>
+          <ul className="card-list">
+            {books.map((book) => (
               <div key={book.id} className="card" role="button" tabIndex="0">
                 <h3>{book.title}</h3>
                 <p>{book.author}</p>
@@ -167,27 +209,10 @@ export default function Accueil() {
                   </button>
                 </Link>
               </div>
-            </div>
-          ))}
-        </Slider>
-      </section>
-      <ul className="card-list">
-        {books.map((book) => (
-          <div key={book.id} className="card" role="button" tabIndex="0">
-            <h3>{book.title}</h3>
-            <p>{book.author}</p>
-            <p>{book.year}</p>
-            <p>{book.resume}</p>
-            <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
-
-            <Link to={`/book/${book.id}`} key={book.id}>
-              <button className="buttonKnow" type="button">
-                En savoir plus
-              </button>
-            </Link>
-          </div>
-        ))}
-      </ul>
+            ))}
+          </ul>
+        </>
+      )}
     </section>
   );
 }

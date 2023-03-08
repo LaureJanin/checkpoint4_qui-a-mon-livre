@@ -110,6 +110,10 @@
     }
   }
 
+  .notFoundLottie {
+    width: 15rem;
+  }
+
   .slider-section {
     width: 90%;
     margin: auto;
@@ -172,6 +176,7 @@
     }
     .card-list {
       display: block;
+      width: 95%;
       padding-left: 0;
       .card {
         box-shadow: 0 10px 15px 10px rgba(0, 0, 0, 0.1),
