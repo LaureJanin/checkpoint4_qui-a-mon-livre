@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Player } from "@lottiefiles/react-lottie-player";
 import moment from "moment";
 import Slider from "react-slick";
@@ -18,6 +18,8 @@ export default function Accueil() {
   const [resume, setResume] = useState("");
   const [date, setDate] = useState("");
   const [isBook, setIsBook] = useState(true);
+
+  const navigate = useNavigate();
 
   const getData = () => {
     instance
@@ -80,6 +82,11 @@ export default function Accueil() {
         console.error(err);
       });
   }
+
+  const handleDisconnected = () => {
+    sessionStorage.removeItem("token");
+    navigate("/");
+  };
 
   return (
     <section className="container">
@@ -144,55 +151,82 @@ export default function Accueil() {
       </div>
       {isBook ? (
         <>
+          <br />
+          <br />
           <p>Vous n'avez pas d'emprunt enregistré</p>
-          <br />
-          <br />
           <br />
           <Player autoplay loop src={pile} className="notFoundLottie" />
         </>
       ) : (
         <>
           <section className="slider-section">
-            <Slider
-              className="slider-flex"
-              infinite
-              centerMode
-              centerPadding="0px"
-              slidesToShow={3}
-              slidesToScroll={1}
-              responsive={[
-                {
-                  breakpoint: 768,
-                  settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
+            {books.length >= 3 ? (
+              <Slider
+                className="slider-flex"
+                infinite
+                centerMode
+                centerPadding="0px"
+                slidesToShow={3}
+                slidesToScroll={1}
+                responsive={[
+                  {
+                    breakpoint: 768,
+                    settings: {
+                      slidesToShow: 1,
+                      slidesToScroll: 1,
+                    },
                   },
-                },
-              ]}
-            >
-              {books.map((book) => (
-                <div key={book.id} className="cards">
-                  <div
-                    key={book.id}
-                    className="card"
-                    role="button"
-                    tabIndex="0"
-                  >
-                    <h3>{book.title}</h3>
-                    <p>{book.author}</p>
-                    <p>{book.year}</p>
-                    <p>{book.resume}</p>
-                    <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
+                ]}
+              >
+                {books.map((book) => (
+                  <div key={book.id} className="cards">
+                    <div
+                      key={book.id}
+                      className="card"
+                      role="button"
+                      tabIndex="0"
+                    >
+                      <h3>{book.title}</h3>
+                      <p>{book.author}</p>
+                      <p>{book.year}</p>
+                      <p>{book.resume}</p>
+                      <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
 
-                    <Link to={`/book/${book.id}`} key={book.id}>
-                      <button className="buttonKnow" type="button">
-                        En savoir plus
-                      </button>
-                    </Link>
+                      <Link to={`/book/${book.id}`} key={book.id}>
+                        <button className="buttonKnow" type="button">
+                          En savoir plus
+                        </button>
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </Slider>
+                ))}
+              </Slider>
+            ) : (
+              <div className="notSlider">
+                {books.map((book) => (
+                  <div key={book.id} className="cards">
+                    <div
+                      key={book.id}
+                      className="card"
+                      role="button"
+                      tabIndex="0"
+                    >
+                      <h3>{book.title}</h3>
+                      <p>{book.author}</p>
+                      <p>{book.year}</p>
+                      <p>{book.resume}</p>
+                      <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
+
+                      <Link to={`/book/${book.id}`} key={book.id}>
+                        <button className="buttonKnow" type="button">
+                          En savoir plus
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </section>
           <ul className="card-list">
             {books.map((book) => (
@@ -213,6 +247,13 @@ export default function Accueil() {
           </ul>
         </>
       )}
+      <button
+        type="button"
+        className="buttonDisconnect"
+        onClick={handleDisconnected}
+      >
+        Se déconnecter
+      </button>
     </section>
   );
 }
