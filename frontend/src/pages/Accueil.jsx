@@ -37,15 +37,16 @@ export default function Accueil() {
 
   function handleNewBook(e) {
     e.preventDefault();
+    const adminId = window.sessionStorage.getItem("admin_id");
     instance
       .post(`/borrower`, {
         firstname: "John",
         lastname: "Doe",
         email: "john.doe@mail.com",
         phone_number: "01 02 03 04 05",
+        admin_id: adminId,
       })
       .then((response) => {
-        console.warn(response.data);
         const borrowerId = response.data.id;
         instance
           .post(`/book`, {
@@ -56,6 +57,7 @@ export default function Accueil() {
             isBorrowed: true,
             loan_date: date,
             borrower_id: borrowerId,
+            admin_id: adminId,
           })
           .then(() => {
             setBooks(books);

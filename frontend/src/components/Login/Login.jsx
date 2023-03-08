@@ -22,8 +22,9 @@ export default function Login() {
     e.preventDefault();
     instance
       .post("/login", loginAdmin)
-      .then(({ data: { token } }) => {
+      .then(({ data: { token, adminId } }) => {
         Cookies.set("admin_auth_frontend", token);
+        window.sessionStorage.setItem("admin_id", adminId);
         navigate("/accueil");
       })
       .catch((err) => {

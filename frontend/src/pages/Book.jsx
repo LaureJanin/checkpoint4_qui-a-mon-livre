@@ -66,6 +66,7 @@ export default function Book() {
   function handleUpdateBook(e) {
     e.preventDefault();
     setIsEditingBook(false);
+    const adminId = window.sessionStorage.getItem("admin_id");
     instance
       .put(`/book/${id}`, {
         title: titleBook,
@@ -75,6 +76,7 @@ export default function Book() {
         isBorrowed: book.isBorrowed,
         loan_date: dateBook.split("T")[0],
         borrower_id: book.borrower_id,
+        admin_id: adminId,
       })
       .then((res) => {
         console.warn(res);
@@ -101,12 +103,14 @@ export default function Book() {
   function handleUpdateBorrower(e) {
     e.preventDefault();
     setIsEditingBorrower(false);
+    const adminId = window.sessionStorage.getItem("admin_id");
     instance
       .put(`/borrower/${book.borrower_id}`, {
         firstname: firstnameBorrower,
         lastname: lastnameBorrower,
         email: emailBorrower,
         phone_number: phoneNumberBorrower,
+        admin_id: adminId,
       })
       .then((res) => {
         console.warn(res);
