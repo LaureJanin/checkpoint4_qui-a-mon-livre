@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+// eslint-disable-next-line
 import { Player } from "@lottiefiles/react-lottie-player";
 import moment from "moment";
 import Slider from "react-slick";
