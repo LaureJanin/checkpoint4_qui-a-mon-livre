@@ -93,7 +93,16 @@ export default function Accueil() {
   }
 
   const handleDisconnected = () => {
-    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("admin_id");
+    const cookies = document.cookie.split(";");
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim().split("=")[0];
+      if (!sessionStorage.getItem(cookie)) {
+        document.cookie = `${cookie}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      }
+    }
+
     navigate("/");
   };
 

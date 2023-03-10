@@ -102,7 +102,7 @@ export default function RegisterForm() {
         <button className="btn-register" type="submit">
           Register
         </button>
-        <Link to="/accueil">
+        <Link to="/">
           <button className="btn-register" type="button">
             Retour
           </button>
