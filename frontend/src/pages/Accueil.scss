@@ -1,17 +1,28 @@
 @import "../assets/_variables.scss";
 
 .container {
-  font-family: $font-stack;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-bottom: 2rem;
   h1 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
     font-size: 2rem;
   }
-
+  .buttonDashboard {
+    width: 15rem;
+    height: 4rem;
+    margin-right: 1rem;
+    font-size: 18px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #583c87;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 10px 15px 10px rgba(0, 0, 0, 0.1),
+      0 4px 6px 8px rgba(1, 1, 1, 0.05);
+  }
   .buttonAdd {
     width: 15rem;
     height: 4rem;
@@ -24,7 +35,7 @@
     font-size: 18px;
     border-radius: 5px;
     border: none;
-    margin-top: 1rem;
+    margin: 2rem auto;
   }
 
   .buttonAdd:hover {
@@ -117,35 +128,53 @@
   }
 
   .slider-section {
-    width: 90%;
-    margin: auto;
-
+    width: 100%;
     .slider-flex {
       width: 80%;
       margin: auto;
-      padding-left: 60px;
-      padding-right: 60px;
-
+      padding: 2rem 5rem;
       .card {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 600px;
+        gap: 1rem;
+        height: auto;
         width: 80%;
-        padding-left: 3rem;
+        margin-left: auto;
+        margin-right: auto;
         padding-bottom: 1rem;
         padding-top: 1rem;
+        margin-top: 1rem;
         cursor: pointer;
         &:hover {
           transform: scale(1.1);
         }
       }
+      .slick-next,
+      .slick-prev {
+        transform: none;
+      }
+
+      .slick-arrow:hover {
+        transform: none;
+      }
 
       .slick-prev:before,
       .slick-next:before {
-        font-size: 25px;
+        font-size: 35px;
         color: black;
+      }
+
+      .slick-prev:hover:before,
+      .slick-next:hover:before {
+        color: #c9768f;
+      }
+
+      .slick-prev:hover,
+      .slick-next:hover {
+        background-color: transparent;
+        transform: none;
       }
 
       .buttonKnow {
@@ -167,20 +196,22 @@
     }
   }
   .notSlider {
-    width: 90%;
+    width: 100%;
     margin: auto;
     display: flex;
     justify-content: center;
-    gap: 3rem;
+    gap: 4rem;
     .card {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 500px;
-      width: 100%;
-      padding-bottom: 1rem;
-      padding-top: 1rem;
+      gap: 1rem;
+      min-height: 25rem;
+      min-width: 15rem;
+      width: 21rem;
+      padding-bottom: 4rem;
+      padding-top: 4rem;
       cursor: pointer;
       &:hover {
         transform: scale(1.1);
@@ -195,8 +226,7 @@
       color: white;
       border-radius: 5px;
       border: none;
-      margin-bottom: 1rem;
-      margin-top: 1rem;
+      margin-top: 2rem;
     }
     .buttonKnow:hover {
       background-color: #7b7373;
@@ -216,7 +246,6 @@
     color: white;
     border-radius: 5px;
     border: none;
-    margin-top: 2rem;
     font-size: 16px;
     box-shadow: 0 10px 15px 10px rgba(0, 0, 0, 0.1),
       0 4px 6px 8px rgba(1, 1, 1, 0.05);
@@ -225,6 +254,23 @@
 
 @media screen and (max-width: 768px) {
   .container {
+    h1 {
+      margin-bottom: 1rem;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      a {
+        .buttonDashboard {
+          margin: 0;
+          margin-right: 0;
+        }
+      }
+    }
     .slider-section {
       display: none;
     }
@@ -233,12 +279,15 @@
       width: 95%;
       padding-left: 0;
       .card {
+        border-radius: 5px;
         box-shadow: 0 10px 15px 10px rgba(0, 0, 0, 0.1),
           0 4px 6px 8px rgba(1, 1, 1, 0.05);
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
         padding: 1rem;
         text-align: center;
-        margin-bottom: 1rem;
-        border-radius: 5px;
+        margin-bottom: 2rem;
         .buttonKnow {
           width: 10rem;
           height: 3rem;

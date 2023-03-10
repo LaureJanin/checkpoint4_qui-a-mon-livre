@@ -267,7 +267,7 @@ export default function Book() {
             <h3>Numéro de téléphone de l'emprunteur :</h3>
             <p>{borrower.phone_number}</p>
             <h3>Adresse email de l'emprunteur :</h3>
-            <p>{borrower.email}</p>
+            <a href={`mailto:${borrower.email}`}>{borrower.email}</a>
             <button
               className="buttonModif"
               type="submit"

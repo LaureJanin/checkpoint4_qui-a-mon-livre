@@ -3,13 +3,18 @@
 .container {
   font-family: $font-stack;
   color: $primary-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 
   .login {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 8rem;
+    // margin-top: 8rem;
 
     h1 {
       font-weight: 300;

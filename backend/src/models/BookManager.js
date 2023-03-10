@@ -5,6 +5,10 @@ class BookManager extends AbstractManager {
     super({ table: "book" });
   }
 
+  findAllBooks() {
+    return this.connection.query(`select * from  ${this.table}`);
+  }
+
   findAll(adminId) {
     return this.connection
       .query(`SELECT * FROM ${this.table} WHERE admin_id = ?`, [adminId])

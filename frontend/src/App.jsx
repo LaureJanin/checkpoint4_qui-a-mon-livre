@@ -7,6 +7,9 @@ import Home from "./pages/Home";
 import Accueil from "./pages/Accueil";
 import Book from "./pages/Book";
 import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+
+import "./App.scss";
 
 export default function App() {
   function isAuthenticated() {
@@ -30,7 +33,7 @@ export default function App() {
   };
 
   return (
-    <>
+    <div className="App">
       <Background />
       <BrowserRouter>
         <Routes>
@@ -44,8 +47,12 @@ export default function App() {
             path="/book/:id"
             element={<PrivateRoute element={<Book />} />}
           />
+          <Route
+            path="/dashboard"
+            element={<PrivateRoute element={<Dashboard />} />}
+          />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
