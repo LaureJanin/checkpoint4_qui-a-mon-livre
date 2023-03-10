@@ -19,8 +19,17 @@ export default function Accueil() {
   const [resume, setResume] = useState("");
   const [date, setDate] = useState("");
   const [isBook, setIsBook] = useState(true);
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
 
   const navigate = useNavigate();
+  const MAX_CHARS = 300;
+
+  useEffect(() => {
+    const adminId = window.sessionStorage.getItem("admin_id");
+    if (adminId === "1") {
+      setIsSuperAdmin(true);
+    }
+  }, []);
 
   const getData = () => {
     instance
@@ -55,7 +64,7 @@ export default function Accueil() {
         lastname: "Doe",
         email: "john.doe@mail.com",
         phone_number: "01 02 03 04 05",
-        admin_id: adminId,
+        // admin_id: adminId,
       })
       .then((response) => {
         const borrowerId = response.data.id;
@@ -89,10 +98,24 @@ export default function Accueil() {
     navigate("/");
   };
 
+  const handleChange = (e) => {
+    const inputText = e.target.value;
+    if (inputText.length <= MAX_CHARS) {
+      setResume(inputText);
+    }
+  };
+
   return (
     <section className="container">
       <h1>Vos livres empruntés</h1>
-      <div>
+      <div className="buttons">
+        {isSuperAdmin && (
+          <Link to="/dashboard">
+            <button type="button" className="buttonDashboard">
+              Dashboard
+            </button>
+          </Link>
+        )}
         {showModal ? (
           <div>
             <div className="overlay" />
@@ -127,8 +150,10 @@ export default function Accueil() {
                 type="text"
                 value={resume}
                 placeholder="Résumé du livre..."
-                onChange={(event) => setResume(event.target.value)}
+                onChange={handleChange}
+                maxLength={MAX_CHARS}
               />
+              <div>{MAX_CHARS - resume.length} caractères restants</div>
               <label htmlFor="date">Date d'emprunt</label>
               <input
                 type="date"

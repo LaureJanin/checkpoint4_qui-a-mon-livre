@@ -1,7 +1,12 @@
+@import "../src/assets/_variables.scss";
+
 * {
   margin: 0;
+  font-family: $font-stack;
 }
 
-body {
-  overflow-y: hidden;
+@media screen and (max-width: 768px) {
+  body {
+    overflow: scroll;
+  }
 }

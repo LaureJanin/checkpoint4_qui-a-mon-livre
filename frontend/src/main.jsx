@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
 import App from "./App";
+import "./App.scss";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

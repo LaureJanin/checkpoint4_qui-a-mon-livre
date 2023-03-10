@@ -4,7 +4,7 @@ const models = require("../models");
 
 const browse = (req, res) => {
   models.admin
-    .findAll(req.params.book.admin_id)
+    .findAll()
     .then(([rows]) => {
       res.send(rows);
     })
@@ -90,9 +90,26 @@ const log = (req, res) => {
     });
 };
 
+const destroy = (req, res) => {
+  models.admin
+    .delete(req.params.id)
+    .then(([result]) => {
+      if (result.affectedRows === 0) {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(204);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
   add,
   log,
+  destroy,
 };

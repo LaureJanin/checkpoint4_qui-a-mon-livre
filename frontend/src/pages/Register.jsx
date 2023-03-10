@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Notify from "../utils/notification";
 import instance from "../utils/instance";
@@ -23,7 +23,6 @@ export default function RegisterForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { username, password, confirmPassword } = registerUser;
-    console.warn(registerUser);
     if (password !== confirmPassword) {
       toast.error("Les mots de passe ne correspondent pas", {
         className: "custom-toast-error specific_class",
@@ -34,6 +33,17 @@ export default function RegisterForm() {
       toast.error("Veuillez remplir tous les champs", {
         className: "custom-toast-error specific_class",
       });
+      return;
+    }
+    const passwordRegex =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      toast.error(
+        "Le mot de passe doit contenir au moins une minuscule, une majuscule, un caractère spécial et doit avoir une longueur minimale de 8 caractères",
+        {
+          className: "custom-toast-error specific_class",
+        }
+      );
       return;
     }
     instance
@@ -51,7 +61,9 @@ export default function RegisterForm() {
 
   return (
     <section className="container">
-      <h1>Inscription</h1>
+      <h1>
+        Pour vous inscrire, veuillez renseigner un pseudo et un mot de passe
+      </h1>
       <form
         onSubmit={handleSubmit}
         name="register-form"
@@ -90,6 +102,11 @@ export default function RegisterForm() {
         <button className="btn-register" type="submit">
           Register
         </button>
+        <Link to="/accueil">
+          <button className="btn-register" type="button">
+            Retour
+          </button>
+        </Link>
       </form>
     </section>
   );

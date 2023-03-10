@@ -17,13 +17,12 @@ class BorrowerManager extends AbstractManager {
 
   insert(borrower) {
     return this.connection.query(
-      `insert into ${this.table} (firstname, lastname, email, phone_number, admin_id) values (?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (firstname, lastname, email, phone_number) values (?, ?, ?, ?)`,
       [
         borrower.firstname,
         borrower.lastname,
         borrower.email,
         borrower.phone_number,
-        borrower.admin_id,
       ]
     );
   }

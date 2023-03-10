@@ -7,11 +7,16 @@ const borrowerControllers = require("./controllers/borrowerControllers");
 const bookControllers = require("./controllers/bookControllers");
 const authenticateToken = require("./middlewares/authenticate");
 
-// Routes admin
+// Routes log
 router.post("/login", adminControllers.log);
 router.post("/register", adminControllers.add);
 
 router.use(authenticateToken);
+
+// Routes admin
+router.get("/admin", adminControllers.browse);
+router.get("/admin/:id", adminControllers.read);
+router.delete("/admin/:id", adminControllers.destroy);
 
 // Routes borrower
 router.get("/borrower", borrowerControllers.browse);
@@ -22,6 +27,7 @@ router.delete("/borrower/:id", borrowerControllers.destroy);
 
 // Routes book
 router.get("/book", bookControllers.browse);
+router.get("/books", bookControllers.browseAdmin);
 router.get("/book/:id", bookControllers.read);
 router.put("/book/:id", bookControllers.edit);
 router.post("/book", bookControllers.add);
