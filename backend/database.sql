@@ -2,7 +2,6 @@ DROP TABLE IF EXISTS admin;
 DROP TABLE IF EXISTS borrower;
 DROP TABLE IF EXISTS book;
 DROP TABLE IF EXISTS admin_book;
--- DROP TABLE IF EXISTS admin_borrower;
 
 CREATE TABLE admin (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -16,8 +15,6 @@ CREATE TABLE borrower (
   lastname VARCHAR(150) NULL,
   email VARCHAR(80) NULL,
   phone_number VARCHAR(20) NULL
-  -- admin_id INT NOT NULL,
-  -- FOREIGN KEY (admin_id) REFERENCES admin(id)
 );
 
 CREATE TABLE book (
@@ -41,14 +38,6 @@ CREATE TABLE admin_book (
   FOREIGN KEY (admin_id) REFERENCES admin(id),
   FOREIGN KEY (book_id) REFERENCES book(id)
 );
-
--- CREATE TABLE admin_borrower (
---   admin_id INT NOT NULL,
---   borrower_id INT NOT NULL,
---   PRIMARY KEY (admin_id, borrower_id),
---   FOREIGN KEY (admin_id) REFERENCES admin(id),
---   FOREIGN KEY (borrower_id) REFERENCES borrower(id)
--- );
 
 INSERT INTO admin (username, password) 
 VALUES ("Laure", "$argon2id$v=19$m=65536,t=5,p=1$IuFnMLPYW2+3n5eWxdcEBw$qQRs51SNs3W4JIV/reBWMn0L83QZUqMeR9FqMVqXNwA"),

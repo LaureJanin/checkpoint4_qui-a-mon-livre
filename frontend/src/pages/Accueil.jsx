@@ -64,7 +64,6 @@ export default function Accueil() {
         lastname: "Doe",
         email: "john.doe@mail.com",
         phone_number: "01 02 03 04 05",
-        // admin_id: adminId,
       })
       .then((response) => {
         const borrowerId = response.data.id;
