@@ -1,10 +1,14 @@
 @import "../assets/_variables.scss";
 
-.container {
+.container_accueil {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 2rem;
+  // gap: 1rem;
+  color: white;
+
   padding-bottom: 2rem;
   h1 {
     font-size: 2rem;
@@ -38,12 +42,9 @@
     margin: 2rem auto;
   }
 
-  .buttonAdd:hover {
+  .buttonAdd:hover, .buttonDashboard:hover {
     background-color: #7b7373;
     cursor: pointer;
-  }
-  .buttonAdd:active {
-    transform: translateY(2px);
   }
 
   .overlay {
@@ -56,15 +57,15 @@
     z-index: 2;
   }
 
-  .modal_form {
+  .modal_form_accueil {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 1rem;
     background-color: #c9768f;
-    width: 22rem;
-    height: 24rem;
+    width: 25rem;
+    height: 37rem;
     border-radius: 5%;
     position: fixed;
     top: 50%;
@@ -76,7 +77,7 @@
     .close-button {
       box-shadow: none;
       margin-top: 0;
-      margin-left: 19.5rem;
+      margin-left: 20rem;
       width: 1rem;
       color: white;
       background-color: transparent;
@@ -84,6 +85,7 @@
     }
     .close-button:hover {
       background-color: transparent;
+      cursor: pointer;
     }
     label {
       font-size: 20px;
@@ -97,11 +99,11 @@
     }
     input {
       height: 2rem;
+      width: 20rem;
     }
     textarea {
       height: 7rem;
-      font-family: $font-stack;
-      font-size: 14px;
+      width: 20rem;
     }
     .save {
       margin-top: 1rem;
@@ -190,6 +192,7 @@
         margin-top: 1rem;
       }
       .buttonKnow:hover {
+        cursor: pointer;
         background-color: #7b7373;
         transform: translateY(2px);
       }
@@ -249,6 +252,11 @@
     font-size: 16px;
     box-shadow: 0 10px 15px 10px rgba(0, 0, 0, 0.1),
       0 4px 6px 8px rgba(1, 1, 1, 0.05);
+  }
+  .buttonDisconnect:hover {
+    cursor: pointer;
+    background-color: #7b7373;
+    transform: translateY(2px);
   }
 }
 

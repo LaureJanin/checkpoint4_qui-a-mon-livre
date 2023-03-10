@@ -105,7 +105,7 @@ export default function Accueil() {
   };
 
   return (
-    <section className="container">
+    <section className="container_accueil">
       <h1>Vos livres empruntés</h1>
       <div className="buttons">
         {isSuperAdmin && (
@@ -118,7 +118,7 @@ export default function Accueil() {
         {showModal ? (
           <div>
             <div className="overlay" />
-            <form className="modal_form" onSubmit={handleNewBook}>
+            <form className="modal_form_accueil" onSubmit={handleNewBook}>
               <button
                 type="button"
                 className="close-button"

@@ -142,13 +142,13 @@ export default function Book() {
   };
 
   return (
-    <section className="container">
+    <section className="container_book">
       <h1>Emprunt en cours</h1>
       <div className="box">
         {isEditingBook ? (
           <div>
             <div className="overlay" />
-            <form className="modal_form" onSubmit={handleUpdateBook}>
+            <form className="modal_form_book" onSubmit={handleUpdateBook}>
               <button
                 type="button"
                 className="close-button"
@@ -217,7 +217,7 @@ export default function Book() {
         {isEditingBorrower ? (
           <div>
             <div className="overlay" />
-            <form className="modal_form" onSubmit={handleUpdateBorrower}>
+            <form className="modal_form_book" onSubmit={handleUpdateBorrower}>
               <button
                 type="button"
                 className="close-button"

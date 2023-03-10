@@ -1,51 +1,23 @@
 @import "../assets/_variables.scss";
 
-.container {
-  height: 100%;
-
+.container_book {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  color: white;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  h1 {
+    font-size: 2rem;
+  }
   .box {
     display: flex;
     height: auto;
     gap: 2rem;
-    .book {
-      width: 30rem;
-      padding: 2rem;
-      margin-top: 2rem;
-      border-radius: 5%;
-      border: none;
-      box-shadow: 0 10px 15px 10px rgba(0, 0, 0, 0.1),
-        0 4px 6px 8px rgba(1, 1, 1, 0.05);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      a {
-        color: white;
-      }
-
-      .buttonModif {
-        width: 12rem;
-        height: 3rem;
-        text-align: center;
-        vertical-align: middle;
-        background-color: #c9768f;
-        color: white;
-        border-radius: 5px;
-        border: none;
-        margin-bottom: 1rem;
-      }
-
-      button:hover {
-        background-color: #7b7373;
-        cursor: pointer;
-      }
-      button:active {
-        transform: translateY(2px);
-      }
-    }
-
-    .modal_form {
+    .modal_form_book {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -105,6 +77,44 @@
         cursor: pointer;
       }
     }
+    .book {
+      width: 30rem;
+      padding: 2rem;
+      margin-top: 2rem;
+      border-radius: 5%;
+      border: none;
+      box-shadow: 0 10px 15px 10px rgba(0, 0, 0, 0.1),
+        0 4px 6px 8px rgba(1, 1, 1, 0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      a {
+        color: white;
+      }
+
+      .buttonModif {
+        width: 12rem;
+        height: 3rem;
+        text-align: center;
+        vertical-align: middle;
+        background-color: #c9768f;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      button:hover {
+        background-color: #7b7373;
+        cursor: pointer;
+      }
+      button:active {
+        transform: translateY(2px);
+      }
+    }
   }
   .buttonReturn {
     width: 12rem;
@@ -115,7 +125,7 @@
     color: white;
     border-radius: 5px;
     border: none;
-    margin-top: 2rem;
+    margin-top: 1rem;
     font-size: 16px;
     box-shadow: 0 10px 15px 10px rgba(0, 0, 0, 0.1),
       0 4px 6px 8px rgba(1, 1, 1, 0.05);
