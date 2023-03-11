@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
 import instance from "../utils/instance";
-import "./Book.scss";
+import "./styles/Book.scss";
 
 export default function Book() {
   const [book, setBook] = useState([]);

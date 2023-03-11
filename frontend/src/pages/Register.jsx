@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import Notify from "../utils/notification";
 import instance from "../utils/instance";
 
-import "./Register.scss";
+import "./styles/Register.scss";
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);

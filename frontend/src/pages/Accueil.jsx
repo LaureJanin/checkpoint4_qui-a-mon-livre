@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import instance from "../utils/instance";
 import pile from "../assets/lottie/pile.json";
-import "./Accueil.scss";
+import "./styles/Accueil.scss";
 
 export default function Accueil() {
   const [books, setBooks] = useState([]);
@@ -20,6 +20,7 @@ export default function Accueil() {
   const [date, setDate] = useState("");
   const [isBook, setIsBook] = useState(true);
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const navigate = useNavigate();
   const MAX_CHARS = 450;
@@ -91,6 +92,14 @@ export default function Accueil() {
         console.error(err);
       });
   }
+
+  const deleteModal = () => {
+    setShowDeleteModal(!showDeleteModal);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(!showDeleteModal);
+  };
 
   const handleDisconnected = () => {
     sessionStorage.removeItem("admin_id");
@@ -281,13 +290,23 @@ export default function Accueil() {
           </ul>
         </>
       )}
-      <button
-        type="button"
-        className="buttonDisconnect"
-        onClick={handleDisconnected}
-      >
+      <button type="button" className="buttonDisconnect" onClick={deleteModal}>
         Se déconnecter
       </button>
+      {showDeleteModal && (
+        <div>
+          <div className="overlay" />
+          <div className="modal_form">
+            <p>Voulez-vous vous déconnecter ?</p>
+            <button className="save" type="button" onClick={handleDisconnected}>
+              Oui
+            </button>
+            <button className="save" type="button" onClick={handleCancelDelete}>
+              Annuler
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
