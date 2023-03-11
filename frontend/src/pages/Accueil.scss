@@ -6,7 +6,6 @@
   justify-content: center;
   align-items: center;
   margin-top: 2rem;
-  // gap: 1rem;
   color: white;
 
   padding-bottom: 2rem;
@@ -66,21 +65,20 @@
     gap: 1rem;
     background-color: #c9768f;
     width: 25rem;
-    height: 37rem;
-    border-radius: 5%;
+    height: 36rem;
+    border-radius: 5px;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 9999;
     box-shadow: none;
-
+   
     .close-button {
       box-shadow: none;
-      margin-top: 0;
-      margin-left: 20rem;
       width: 1rem;
-      color: white;
+      align-self: flex-end;
+      margin-right: 1.5rem;
       background-color: transparent;
       border: none;
     }
@@ -88,23 +86,22 @@
       background-color: transparent;
       cursor: pointer;
     }
+    
     label {
       font-size: 20px;
       color: #3a373e;
     }
     input,
     textarea {
-      width: 17rem;
       border-radius: 3px;
       border: none;
+      width: 20rem;
     }
     input {
       height: 2rem;
-      width: 20rem;
     }
     textarea {
       height: 7rem;
-      width: 20rem;
     }
     .save {
       margin-top: 1rem;

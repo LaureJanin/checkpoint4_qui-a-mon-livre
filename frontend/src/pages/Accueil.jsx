@@ -22,7 +22,7 @@ export default function Accueil() {
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
 
   const navigate = useNavigate();
-  const MAX_CHARS = 300;
+  const MAX_CHARS = 450;
 
   useEffect(() => {
     const adminId = window.sessionStorage.getItem("admin_id");
@@ -133,7 +133,7 @@ export default function Accueil() {
                 className="close-button"
                 onClick={toggleModal}
               >
-                X
+                ✖️
               </button>
               <label htmlFor="text">Enregistrer un nouvel emprunt</label>
               <input

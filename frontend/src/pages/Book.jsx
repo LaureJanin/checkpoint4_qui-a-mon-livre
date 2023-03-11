@@ -24,6 +24,7 @@ export default function Book() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { id } = useParams();
+  const MAX_CHARS = 450;
 
   const getData = () => {
     instance
@@ -141,6 +142,13 @@ export default function Book() {
     setShowDeleteModal(!showDeleteModal);
   };
 
+  const handleChange = (e) => {
+    const inputText = e.target.value;
+    if (inputText.length <= MAX_CHARS) {
+      setResumeBook(inputText);
+    }
+  };
+
   return (
     <section className="container_book">
       <h1>Emprunt en cours</h1>
@@ -154,7 +162,7 @@ export default function Book() {
                 className="close-button"
                 onClick={handleEditBook}
               >
-                X
+                ✖️
               </button>
               <label htmlFor="date">
                 Modifier les informations concernant le livre
@@ -181,8 +189,10 @@ export default function Book() {
                 type="text"
                 value={resumeBook}
                 placeholder="Résumé du livre"
-                onChange={(event) => setResumeBook(event.target.value)}
+                onChange={handleChange}
+                maxLength={MAX_CHARS}
               />
+              <div>{MAX_CHARS - resumeBook.length} caractères restants</div>
               <label htmlFor="date">Date d'emprunt</label>
               <input
                 type="date"
@@ -223,7 +233,7 @@ export default function Book() {
                 className="close-button"
                 onClick={handleEditBorrower}
               >
-                X
+                ✖️
               </button>
               <label htmlFor="text">
                 Modifier les informations concernant l'emprunteur

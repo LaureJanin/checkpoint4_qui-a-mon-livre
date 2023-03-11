@@ -8,10 +8,19 @@
   gap: 1rem;
   padding-bottom: 2rem;
   color: white;
-  margin-top: 2rem;
+  margin-top: 4rem;
   margin-bottom: 2rem;
   h1 {
     font-size: 2rem;
+  }
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 2;
   }
   .box {
     display: flex;
@@ -24,7 +33,7 @@
       justify-content: center;
       gap: 1rem;
       background-color: #c9768f;
-      width: 23rem;
+      width: 25rem;
       height: auto;
       padding-top: 1rem;
       padding-bottom: 1rem;
@@ -38,21 +47,33 @@
 
       .close-button {
         box-shadow: none;
-        margin-top: 0;
-        margin-left: 19.5rem;
         width: 1rem;
-        color: white;
+        align-self: flex-end;
+        margin-right: 1.5rem;
         background-color: transparent;
         border: none;
       }
       .close-button:hover {
         background-color: transparent;
+        cursor: pointer;
       }
       label {
         font-size: 20px;
         color: #3a373e;
         text-align: center;
       }
+      input,
+    textarea {
+      border-radius: 3px;
+      border: none;
+      width: 20rem;
+    }
+    input {
+      height: 2rem;
+    }
+    textarea {
+      height: 13rem;
+    }
       p {
         font-size: 20px;
         color: #3a373e;
