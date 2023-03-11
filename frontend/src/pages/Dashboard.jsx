@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import instance from "../utils/instance";
 import trash from "../assets/img/trash.png";
-import "./Dashboard.scss";
+import "./styles/Dashboard.scss";
 
 export default function Dashboard() {
   const [admins, setAdmins] = useState([]);
@@ -36,6 +36,7 @@ export default function Dashboard() {
     getBook();
   }, []);
 
+  // Functions for delete admin and the book associate to this admin.
   const handleDelete = (id) => {
     setAdminIdToDelete(id);
   };

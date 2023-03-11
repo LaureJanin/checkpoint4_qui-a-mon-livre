@@ -1,8 +1,15 @@
+Welcome to the 'Who has my book?' application. An application that allows you to know where your books are.
+
 ## Concept
 
-Cette petite application permet de créer une bibliothèque de livres empruntés.
-Entrez les informations concernant le livre, puis celles concernant l'emprunteur et vous saurez désormais où sont vos livres, qui les a empruntés et depuis combien de temps.
-Les informations concernant l'emprunteur vous permettent de le contacter en cas de besoin ou pour récupérer votre livres.
+This small application allows you to create a library of borrowed books. Enter the information about the book, then the borrower's information and you will now know where your books are, who borrowed them and for how long. The borrower's information allows you to contact them if necessary or to retrieve your books.
+
+## Technos
+The site was developed using the following technologies :
+
+- React
+- Node
+- Express
 
 ## Template
 

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import Notify from "../utils/notification";
 import instance from "../utils/instance";
 
-import "./Register.scss";
+import "./styles/Register.scss";
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +13,7 @@ export default function RegisterForm() {
     password: "",
     confirmPassword: "",
   });
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,21 +21,26 @@ export default function RegisterForm() {
     setRegisterUser({ ...registerUser, [name]: value });
   };
 
+  // This function is a form submission handler.
   const handleSubmit = (e) => {
+    // When the form is submitted, it first prevents the default form submission behavior.
     e.preventDefault();
     const { username, password, confirmPassword } = registerUser;
+    // It then checks if the entered password and confirmed password match, and if not, displays an error message using the toast function.
     if (password !== confirmPassword) {
       toast.error("Les mots de passe ne correspondent pas", {
         className: "custom-toast-error specific_class",
       });
       return;
     }
+    // It also checks if the username, password, and confirmed password fields are not empty, and if any of them are empty, it displays another error message using the toast function.
     if (username === "" || password === "" || confirmPassword === "") {
       toast.error("Veuillez remplir tous les champs", {
         className: "custom-toast-error specific_class",
       });
       return;
     }
+    // It then checks if the password meets a specific regular expression pattern that requires it to have at least one digit, one lowercase letter, one uppercase letter, one special character, and a minimum length of 8 characters. If the password does not meet this requirement, it displays another error message using the toast function.
     const passwordRegex =
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
     if (!passwordRegex.test(password)) {
@@ -102,7 +108,7 @@ export default function RegisterForm() {
         <button className="btn-register" type="submit">
           Register
         </button>
-        <Link to="/accueil">
+        <Link to="/">
           <button className="btn-register" type="button">
             Retour
           </button>

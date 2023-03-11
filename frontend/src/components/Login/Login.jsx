@@ -18,6 +18,9 @@ export default function Login() {
     setLoginAdmin({ ...loginAdmin, [name]: value });
   };
 
+  // This function handles a login process, sending a POST request to the "/login" endpoint using Axios instance, and then handling the response using a Promise.
+  // If the login is successful, the function sets a cookie ("admin_auth_frontend") with the returned token, stores the admin ID in session storage, and navigates to the "/accueil" page.
+  // If the login fails, it logs an error and displays a toast message indicating that the username or password is incorrect.
   const handleLogin = (e) => {
     e.preventDefault();
     instance

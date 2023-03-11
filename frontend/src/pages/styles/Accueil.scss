@@ -1,10 +1,13 @@
-@import "../assets/_variables.scss";
+@import "../../assets/_variables.scss";
 
-.container {
+.container_accueil {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 2rem;
+  color: white;
+
   padding-bottom: 2rem;
   h1 {
     font-size: 2rem;
@@ -38,12 +41,10 @@
     margin: 2rem auto;
   }
 
-  .buttonAdd:hover {
+  .buttonAdd:hover,
+  .buttonDashboard:hover {
     background-color: #7b7373;
     cursor: pointer;
-  }
-  .buttonAdd:active {
-    transform: translateY(2px);
   }
 
   .overlay {
@@ -56,16 +57,17 @@
     z-index: 2;
   }
 
-  .modal_form {
+ // SCSS for form to add a new book
+  .modal_form_accueil {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 1rem;
     background-color: #c9768f;
-    width: 22rem;
-    height: 24rem;
-    border-radius: 5%;
+    width: 25rem;
+    height: 36rem;
+    border-radius: 5px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -75,33 +77,32 @@
 
     .close-button {
       box-shadow: none;
-      margin-top: 0;
-      margin-left: 19.5rem;
       width: 1rem;
-      color: white;
+      align-self: flex-end;
+      margin-right: 1.5rem;
       background-color: transparent;
       border: none;
     }
     .close-button:hover {
       background-color: transparent;
+      cursor: pointer;
     }
+
     label {
       font-size: 20px;
       color: #3a373e;
     }
     input,
     textarea {
-      width: 17rem;
       border-radius: 3px;
       border: none;
+      width: 20rem;
     }
     input {
       height: 2rem;
     }
     textarea {
       height: 7rem;
-      font-family: $font-stack;
-      font-size: 14px;
     }
     .save {
       margin-top: 1rem;
@@ -127,6 +128,7 @@
     width: 15rem;
   }
 
+  // SCSS for slider-section in desktop
   .slider-section {
     width: 100%;
     .slider-flex {
@@ -190,11 +192,14 @@
         margin-top: 1rem;
       }
       .buttonKnow:hover {
+        cursor: pointer;
         background-color: #7b7373;
         transform: translateY(2px);
       }
     }
   }
+
+  // SCSS for slider when there are 1, 2 or 3 books only
   .notSlider {
     width: 100%;
     margin: auto;
@@ -250,8 +255,57 @@
     box-shadow: 0 10px 15px 10px rgba(0, 0, 0, 0.1),
       0 4px 6px 8px rgba(1, 1, 1, 0.05);
   }
-}
+  .buttonDisconnect:hover {
+    cursor: pointer;
+    background-color: #7b7373;
+    transform: translateY(2px);
+  }
 
+  // SCSS for form when disconnect
+  .modal_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background-color: #c9768f;
+    width: 23rem;
+    height: auto;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 5px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    box-shadow: none;
+    p {
+      font-size: 20px;
+      color: #3a373e;
+      text-align: center;
+      margin: 0;
+    }
+    .save {
+      width: 10rem;
+      height: 2rem;
+      border-radius: 3px;
+      border: none;
+      font-size: 18px;
+      color: #3a373e;
+      font-weight: 700;
+      box-shadow: 0 3px 10px 2px rgb(106, 67, 89);
+    }
+    .save:active {
+      transform: translateY(2px);
+    }
+
+    .save:hover {
+      cursor: pointer;
+    }
+  }
+}
+// SCSS for responsive
 @media screen and (max-width: 768px) {
   .container {
     h1 {

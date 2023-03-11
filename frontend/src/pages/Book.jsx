@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
 import instance from "../utils/instance";
-import "./Book.scss";
+import "./styles/Book.scss";
 
 export default function Book() {
   const [book, setBook] = useState([]);
@@ -25,13 +25,16 @@ export default function Book() {
 
   const { id } = useParams();
 
+  // The getData function makes two GET requests to retrieve data related to a specific book. The function expects an id parameter that represents the book's unique identifier.
   const getData = () => {
     instance
+      // The first GET request uses the instance object to send a GET request to the server to retrieve the book's information using the id parameter. Upon a successful response, it updates the book state with the retrieved data.
       .get(`/book/${id}`)
       .then((result) => {
         setBook(result.data);
         const borrowerId = result.data.borrower_id;
         instance
+          // The second GET request uses the borrower_id property of the book state to send another GET request to retrieve information about the borrower who borrowed the book. Upon a successful response, it updates the borrower state with the retrieved data.
           .get(`/borrower/${borrowerId}`)
           .then((res) => {
             setBorrower(res.data);
@@ -63,9 +66,13 @@ export default function Book() {
     }
   }, [book]);
 
+  // The handleUpdateBook function is used to update the information of a book on the server using the PUT method.
+  // It expects an e event object as a parameter and is typically called when a user submits a form to update a book's information.
   function handleUpdateBook(e) {
     e.preventDefault();
+    // It then sets isEditingBook state to false to indicate that the book is no longer being edited.
     setIsEditingBook(false);
+    // The function then retrieves the admin_id from sessionStorage and uses the instance object to send a PUT request to the server to update the book's information. The id parameter is used to identify the book that needs to be updated. The new book information is sent as an object with properties title, author, year, resume, isBorrowed, loan_date, borrower_id, and admin_id.
     const adminId = window.sessionStorage.getItem("admin_id");
     instance
       .put(`/book/${id}`, {
@@ -100,9 +107,12 @@ export default function Book() {
     }
   }, [borrower]);
 
+  // This function handleUpdateBorrower is used to update the information of a borrower.
   function handleUpdateBorrower(e) {
+    // When the function is called, it first prevents the default action of the form submission. It then sets setIsEditingBorrower to false, which is a state variable used to control whether the borrower information is being edited or not.
     e.preventDefault();
     setIsEditingBorrower(false);
+    // Next, it retrieves the adminId from the session storage. It then uses the instance object to make an HTTP PUT request to the /borrower/${book.borrower_id} endpoint to update the borrower's information. The request body contains the updated borrower's firstname, lastname, email, phone_number, and admin_id.
     const adminId = window.sessionStorage.getItem("admin_id");
     instance
       .put(`/borrower/${book.borrower_id}`, {
@@ -112,6 +122,7 @@ export default function Book() {
         phone_number: phoneNumberBorrower,
         admin_id: adminId,
       })
+      // If the request is successful, the function calls the getData function to retrieve the updated borrower data and updates the state variables accordingly. If the request fails, it logs the error to the console.
       .then((res) => {
         console.warn(res);
         getData();
@@ -121,6 +132,7 @@ export default function Book() {
       });
   }
 
+  // Functions for delete the book
   function handleDelete() {
     instance
       .delete(`/book/${id}`)
@@ -141,20 +153,29 @@ export default function Book() {
     setShowDeleteModal(!showDeleteModal);
   };
 
+  // Function for limit the number of caracters for the textarea 'resume'.
+  const MAX_CHARS = 450;
+  const handleChange = (e) => {
+    const inputText = e.target.value;
+    if (inputText.length <= MAX_CHARS) {
+      setResumeBook(inputText);
+    }
+  };
+
   return (
-    <section className="container">
+    <section className="container_book">
       <h1>Emprunt en cours</h1>
       <div className="box">
         {isEditingBook ? (
           <div>
             <div className="overlay" />
-            <form className="modal_form" onSubmit={handleUpdateBook}>
+            <form className="modal_form_book" onSubmit={handleUpdateBook}>
               <button
                 type="button"
                 className="close-button"
                 onClick={handleEditBook}
               >
-                X
+                ✖️
               </button>
               <label htmlFor="date">
                 Modifier les informations concernant le livre
@@ -181,8 +202,10 @@ export default function Book() {
                 type="text"
                 value={resumeBook}
                 placeholder="Résumé du livre"
-                onChange={(event) => setResumeBook(event.target.value)}
+                onChange={handleChange}
+                maxLength={MAX_CHARS}
               />
+              <div>{MAX_CHARS - resumeBook.length} caractères restants</div>
               <label htmlFor="date">Date d'emprunt</label>
               <input
                 type="date"
@@ -217,13 +240,13 @@ export default function Book() {
         {isEditingBorrower ? (
           <div>
             <div className="overlay" />
-            <form className="modal_form" onSubmit={handleUpdateBorrower}>
+            <form className="modal_form_book" onSubmit={handleUpdateBorrower}>
               <button
                 type="button"
                 className="close-button"
                 onClick={handleEditBorrower}
               >
-                X
+                ✖️
               </button>
               <label htmlFor="text">
                 Modifier les informations concernant l'emprunteur

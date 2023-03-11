@@ -8,22 +8,25 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import instance from "../utils/instance";
 import pile from "../assets/lottie/pile.json";
-import "./Accueil.scss";
+import "./styles/Accueil.scss";
 
 export default function Accueil() {
   const [books, setBooks] = useState([]);
-  const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [year, setYear] = useState("");
   const [resume, setResume] = useState("");
   const [date, setDate] = useState("");
+
   const [isBook, setIsBook] = useState(true);
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
 
-  const navigate = useNavigate();
-  const MAX_CHARS = 300;
+  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+  const navigate = useNavigate();
+
+  // This useEffect hook sets the isSuperAdmin state to true if the admin_id stored in the session storage is equal to "1".
   useEffect(() => {
     const adminId = window.sessionStorage.getItem("admin_id");
     if (adminId === "1") {
@@ -31,11 +34,14 @@ export default function Accueil() {
     }
   }, []);
 
+  // This getData function sends a GET request to the "/book" endpoint using Axios instance, and then handles the response using a Promise.
   const getData = () => {
     instance
       .get("/book", books)
       .then((result) => {
+        // If the request is successful, it sets the books state to the returned data, and checks if the length of the data is greater than 0 to determine whether there are any books or not.
         setBooks(result.data);
+        // If there are books, it sets the isBook state to false, indicating that books exist, and if there are no books, it sets the isBook state to true, indicating that there are no books.
         if (result.data.length > 0) {
           setIsBook(false);
         } else {
@@ -55,6 +61,7 @@ export default function Accueil() {
     setShowModal(!showModal);
   };
 
+  // This handleNewBook function is a handler for creating a new book entry. It prevents the default form submission behavior using e.preventDefault(), retrieves the admin ID from the session storage, and then sends a POST request to create a new borrower with the specified details.
   function handleNewBook(e) {
     e.preventDefault();
     const adminId = window.sessionStorage.getItem("admin_id");
@@ -66,6 +73,7 @@ export default function Accueil() {
         phone_number: "01 02 03 04 05",
       })
       .then((response) => {
+        // Upon a successful response, it retrieves the borrower ID from the response and then sends another POST request to create a new book with the specified details, including the borrower ID and admin ID.
         const borrowerId = response.data.id;
         instance
           .post(`/book`, {
@@ -79,6 +87,7 @@ export default function Accueil() {
             admin_id: adminId,
           })
           .then(() => {
+            // If the request is successful, it updates the books state, fetches the latest book data using the getData function, and closes the modal by toggling the showModal state.
             setBooks(books);
             getData();
             setShowModal(!showModal);
@@ -92,11 +101,35 @@ export default function Accueil() {
       });
   }
 
+  // Functions for deconnect
+  const deleteModal = () => {
+    setShowDeleteModal(!showDeleteModal);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(!showDeleteModal);
+  };
+
+  // This handleDisconnected function is a handler for logging out the admin user from the application. It removes the admin_id from the session storage using the removeItem method.
   const handleDisconnected = () => {
-    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("admin_id");
+    const cookies = document.cookie.split(";");
+    // The loop splits each cookie string by the equal sign and uses the cookie name to check if it is stored in the session storage using the getItem method.
+    // It then loops through all the cookies stored in the browser and deletes the ones that are not stored in the session storage using the document.cookie property.
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim().split("=")[0];
+      // If a cookie is not stored in the session storage, it deletes it by setting its expiration date to a past date using the document.cookie property.
+      if (!sessionStorage.getItem(cookie)) {
+        document.cookie = `${cookie}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      }
+    }
+    // Finally, the function uses the navigate function from the @reach/router library to navigate the user back to the home page ("/") of the application.
     navigate("/");
   };
 
+  // Function for limit the number of caracters for the textarea 'resume'.
+  const MAX_CHARS = 450;
   const handleChange = (e) => {
     const inputText = e.target.value;
     if (inputText.length <= MAX_CHARS) {
@@ -105,7 +138,7 @@ export default function Accueil() {
   };
 
   return (
-    <section className="container">
+    <section className="container_accueil">
       <h1>Vos livres empruntés</h1>
       <div className="buttons">
         {isSuperAdmin && (
@@ -118,13 +151,13 @@ export default function Accueil() {
         {showModal ? (
           <div>
             <div className="overlay" />
-            <form className="modal_form" onSubmit={handleNewBook}>
+            <form className="modal_form_accueil" onSubmit={handleNewBook}>
               <button
                 type="button"
                 className="close-button"
                 onClick={toggleModal}
               >
-                X
+                ✖️
               </button>
               <label htmlFor="text">Enregistrer un nouvel emprunt</label>
               <input
@@ -272,13 +305,23 @@ export default function Accueil() {
           </ul>
         </>
       )}
-      <button
-        type="button"
-        className="buttonDisconnect"
-        onClick={handleDisconnected}
-      >
+      <button type="button" className="buttonDisconnect" onClick={deleteModal}>
         Se déconnecter
       </button>
+      {showDeleteModal && (
+        <div>
+          <div className="overlay" />
+          <div className="modal_form">
+            <p>Voulez-vous vous déconnecter ?</p>
+            <button className="save" type="button" onClick={handleDisconnected}>
+              Oui
+            </button>
+            <button className="save" type="button" onClick={handleCancelDelete}>
+              Annuler
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
