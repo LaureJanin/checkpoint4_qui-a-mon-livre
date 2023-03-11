@@ -57,6 +57,7 @@
     z-index: 2;
   }
 
+ // SCSS for form to add a new book
   .modal_form_accueil {
     display: flex;
     flex-direction: column;
@@ -127,6 +128,7 @@
     width: 15rem;
   }
 
+  // SCSS for slider-section in desktop
   .slider-section {
     width: 100%;
     .slider-flex {
@@ -196,6 +198,8 @@
       }
     }
   }
+
+  // SCSS for slider when there are 1, 2 or 3 books only
   .notSlider {
     width: 100%;
     margin: auto;
@@ -257,6 +261,7 @@
     transform: translateY(2px);
   }
 
+  // SCSS for form when disconnect
   .modal_form {
     display: flex;
     flex-direction: column;
@@ -300,7 +305,7 @@
     }
   }
 }
-
+// SCSS for responsive
 @media screen and (max-width: 768px) {
   .container {
     h1 {
