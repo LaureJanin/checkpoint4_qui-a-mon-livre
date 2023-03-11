@@ -36,6 +36,7 @@ export default function Dashboard() {
     getBook();
   }, []);
 
+  // Functions for delete admin and the book associate to this admin.
   const handleDelete = (id) => {
     setAdminIdToDelete(id);
   };

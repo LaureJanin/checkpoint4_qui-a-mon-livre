@@ -11,6 +11,7 @@ const authenticateToken = require("./middlewares/authenticate");
 router.post("/login", adminControllers.log);
 router.post("/register", adminControllers.add);
 
+// Middleware called before the route handler function to verify whether the user is authenticated.
 router.use(authenticateToken);
 
 // Routes admin

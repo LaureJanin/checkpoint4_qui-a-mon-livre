@@ -30,9 +30,6 @@ const read = (req, res) => {
 
 const edit = (req, res) => {
   const item = req.body;
-
-  // TODO validations (length, format...)
-
   item.id = parseInt(req.params.id, 10);
 
   models.item
@@ -52,9 +49,6 @@ const edit = (req, res) => {
 
 const add = (req, res) => {
   const item = req.body;
-
-  // TODO validations (length, format...)
-
   models.item
     .insert(item)
     .then(([result]) => {

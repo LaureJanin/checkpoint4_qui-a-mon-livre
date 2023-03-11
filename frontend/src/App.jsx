@@ -12,13 +12,17 @@ import Dashboard from "./pages/Dashboard";
 import "./App.scss";
 
 export default function App() {
+  // This function check if the user is authenticated with checking if there is a cookie.
   function isAuthenticated() {
     const token = Cookies.get("admin_auth_frontend");
     return token;
   }
 
+  // This code defines a React functional component called PrivateRoute. The component takes an object with a single property called element as its input parameter.
   function PrivateRoute({ element }) {
+    // Within the PrivateRoute function, it calls the useNavigate hook from the react-router-dom package to get a reference to a function that allows the component to navigate to different pages within the app.
     const navigate = useNavigate();
+    // The function also calls the useEffect hook to perform a check if the user is authenticated. If not, it redirects the user to the home page using the navigate function.
     useEffect(() => {
       if (!isAuthenticated()) {
         navigate("/");
@@ -28,6 +32,9 @@ export default function App() {
     return element;
   }
 
+  // The propTypes property is used to define the expected properties of the PrivateRoute component.
+  // In this case, it specifies that the element prop is required and must be a node type.
+  // This is a way to catch errors or bugs during development where the component may be called with the wrong type of data.
   PrivateRoute.propTypes = {
     element: PropTypes.node.isRequired,
   };
