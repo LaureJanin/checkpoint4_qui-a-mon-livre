@@ -12,6 +12,7 @@ import "./styles/Accueil.scss";
 
 export default function Accueil() {
   const [books, setBooks] = useState([]);
+  const [admin, setAdmin] = useState("");
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [year, setYear] = useState("");
@@ -26,9 +27,15 @@ export default function Accueil() {
 
   const navigate = useNavigate();
 
-  // This useEffect hook sets the isSuperAdmin state to true if the admin_id stored in the session storage is equal to "1".
+  // This useEffect get the data of admin logged
   useEffect(() => {
+    // the code retrieves the value of the admin_id key from the sessionStorage object using the window.sessionStorage.getItem() method and saves it to the adminId variable.
     const adminId = window.sessionStorage.getItem("admin_id");
+    // it makes an HTTP GET request to the server using the instance.get() method, passing in the adminId value as a parameter.
+    instance.get(`/admin/${adminId}`, adminId).then((result) => {
+      setAdmin(result.data);
+    });
+    // This useEffect hook sets the isSuperAdmin state to true if the admin_id stored in the session storage is equal to "1".
     if (adminId === "1") {
       setIsSuperAdmin(true);
     }
@@ -137,14 +144,22 @@ export default function Accueil() {
     }
   };
 
+  // Variable for the color of username
+  const styleH1 = {
+    color: "#c9768f",
+  };
+
   return (
     <section className="container_accueil">
-      <h1>Vos livres empruntés</h1>
+      <h1>
+        Bonjour <span style={styleH1}>{admin.username}</span>, voici la liste de
+        vos livres empruntés
+      </h1>
       <div className="buttons">
         {isSuperAdmin && (
           <Link to="/dashboard">
             <button type="button" className="buttonDashboard">
-              Dashboard
+              Tableau de bord
             </button>
           </Link>
         )}
@@ -203,7 +218,7 @@ export default function Accueil() {
             type="button"
             onClick={() => toggleModal()}
           >
-            Ajouter un livre emprunté
+            Ajouter un livre
           </button>
         )}
       </div>
@@ -312,7 +327,7 @@ export default function Accueil() {
         <div>
           <div className="overlay" />
           <div className="modal_form">
-            <p>Voulez-vous vous déconnecter ?</p>
+            <p>Souhaitez-vous vous déconnecter ?</p>
             <button className="save" type="button" onClick={handleDisconnected}>
               Oui
             </button>
