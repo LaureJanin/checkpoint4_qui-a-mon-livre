@@ -162,6 +162,13 @@ export default function Book() {
     }
   };
 
+  // Variable for the style of borrower's name
+  const styleBorrower = {
+    color: "#c9768f",
+    fontSize: "22px",
+    fontWeight: "700",
+  };
+
   return (
     <section className="container_book">
       <h1>Emprunt en cours</h1>
@@ -283,13 +290,10 @@ export default function Book() {
         ) : (
           <section className="book">
             <h2>Informations concernant l'emprunteur</h2>
-            <h3>Le livre a été emprunté par :</h3>
-            <p>
+            <p style={styleBorrower}>
               {borrower.firstname} {borrower.lastname}
             </p>
-            <h3>Numéro de téléphone de l'emprunteur :</h3>
             <p>{borrower.phone_number}</p>
-            <h3>Adresse email de l'emprunteur :</h3>
             <a href={`mailto:${borrower.email}`}>{borrower.email}</a>
             <button
               className="buttonModif"

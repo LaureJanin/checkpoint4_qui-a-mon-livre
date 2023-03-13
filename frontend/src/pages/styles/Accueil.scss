@@ -57,7 +57,7 @@
     z-index: 2;
   }
 
- // SCSS for form to add a new book
+  // SCSS for form to add a new book
   .modal_form_accueil {
     display: flex;
     flex-direction: column;
@@ -125,7 +125,7 @@
   }
 
   .notFoundLottie {
-    width: 15rem;
+    width: 20rem;
   }
 
   // SCSS for slider-section in desktop
@@ -190,6 +190,7 @@
         border: none;
         margin-bottom: 1rem;
         margin-top: 1rem;
+        font-size: 1rem;
       }
       .buttonKnow:hover {
         cursor: pointer;
@@ -232,6 +233,7 @@
       border-radius: 5px;
       border: none;
       margin-top: 2rem;
+      font-size: 1rem;
     }
     .buttonKnow:hover {
       background-color: #7b7373;
@@ -307,9 +309,12 @@
 }
 // SCSS for responsive
 @media screen and (max-width: 768px) {
-  .container {
+  .container_accueil {
     h1 {
-      margin-bottom: 1rem;
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+      text-align: center;
+      font-size: 1.5rem;
     }
 
     .buttons {
@@ -317,13 +322,16 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-
+      margin-top: 1rem;
       a {
         .buttonDashboard {
           margin: 0;
           margin-right: 0;
         }
       }
+    }
+    .modal_form_accueil {
+      width: 95%;
     }
     .slider-section {
       display: none;
@@ -353,6 +361,7 @@
           border: none;
           margin-bottom: 1rem;
           margin-top: 1rem;
+          font-size: 1rem;
         }
         .buttonKnow:hover {
           background-color: #7b7373;
