@@ -62,7 +62,15 @@ export default function Book() {
       setAuthorBook(book.author);
       setYearBook(book.year);
       setResumeBook(book.resume);
-      setDateBook(book.loan_date);
+      // The loan_date property is first converted to a Date object
+      const loanDate = new Date(book.loan_date);
+      // Then one day is added to it using the setDate() method. This is because the toISOString() method returns the date in UTC
+      loanDate.setDate(loanDate.getDate() + 1);
+      // The loan_date property is then formatted as a string in the "YYYY-MM-DD" format and set as the value of the dateBook state variable
+      const localDate = loanDate.toISOString().split("T")[0];
+      const parts = localDate.split("-");
+      const yyyyMmDd = `${parts[0]}-${parts[1]}-${parts[2]}`;
+      setDateBook(yyyyMmDd);
     }
   }, [book]);
 
