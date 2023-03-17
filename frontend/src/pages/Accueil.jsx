@@ -6,6 +6,8 @@ import moment from "moment";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import jwtDecode from "jwt-decode";
+import Cookies from "js-cookie";
 import instance from "../utils/instance";
 import pile from "../assets/lottie/pile.json";
 import "./styles/Accueil.scss";
@@ -27,33 +29,42 @@ export default function Accueil() {
 
   const navigate = useNavigate();
 
-  // This useEffect get the data of admin logged
-  useEffect(() => {
-    // the code retrieves the value of the admin_id key from the sessionStorage object using the window.sessionStorage.getItem() method and saves it to the adminId variable.
-    const adminId = window.sessionStorage.getItem("admin_id");
-    // it makes an HTTP GET request to the server using the instance.get() method, passing in the adminId value as a parameter.
-    instance.get(`/admin/${adminId}`, adminId).then((result) => {
-      setAdmin(result.data);
-    });
-    // This useEffect hook sets the isSuperAdmin state to true if the admin_id stored in the session storage is equal to "1".
-    if (adminId === "1") {
-      setIsSuperAdmin(true);
-    }
-  }, []);
+  // The function begins by getting the value of the "token" cookie using the get() function from the Cookies library.
+  const getAdmin = () => {
+    const token = Cookies.get("token");
+    // The next line decodes the JWT token to obtain the admin ID using the jwtDecode() function.
 
-  // This getData function sends a GET request to the "/book" endpoint using Axios instance, and then handles the response using a Promise.
-  const getData = () => {
+    const decodedToken = jwtDecode(token);
+    const adminId = decodedToken.sub;
+    // The instance object is presumably an Axios instance configured to communicate with a particular API backend.
+    // The function then sends a GET request to the backend to obtain the admin object associated with the decoded admin ID.
     instance
-      .get("/book", books)
+      .get(`/admin/${adminId}`)
       .then((result) => {
-        // If the request is successful, it sets the books state to the returned data, and checks if the length of the data is greater than 0 to determine whether there are any books or not.
-        setBooks(result.data);
-        // If there are books, it sets the isBook state to false, indicating that books exist, and if there are no books, it sets the isBook state to true, indicating that there are no books.
-        if (result.data.length > 0) {
-          setIsBook(false);
-        } else {
-          setIsBook(true);
+        setAdmin(result.data);
+        if (adminId === 1) {
+          setIsSuperAdmin(true);
         }
+        return result.data.id;
+      })
+      // In the subsequent promise, another GET request is sent to obtain an array of books associated with the admin ID.
+
+      .then(() => {
+        instance
+          .get(`/book/${adminId}`, books)
+          .then((result) => {
+            setBooks(result.data);
+            // If the admin ID is equal to 1, the setIsSuperAdmin() function is called to set a boolean state indicating that the current admin is a superadmin.
+
+            if (result.data.length > 0) {
+              setIsBook(false);
+            } else {
+              setIsBook(true);
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       })
       .catch((err) => {
         console.error(err);
@@ -61,7 +72,7 @@ export default function Accueil() {
   };
 
   useEffect(() => {
-    getData();
+    getAdmin();
   }, []);
 
   const toggleModal = () => {
@@ -71,7 +82,9 @@ export default function Accueil() {
   // This handleNewBook function is a handler for creating a new book entry. It prevents the default form submission behavior using e.preventDefault(), retrieves the admin ID from the session storage, and then sends a POST request to create a new borrower with the specified details.
   function handleNewBook(e) {
     e.preventDefault();
-    const adminId = window.sessionStorage.getItem("admin_id");
+    const token = Cookies.get("token");
+    const decodedToken = jwtDecode(token);
+    const adminId = decodedToken.sub;
     instance
       .post(`/borrower`, {
         firstname: "John",
@@ -96,7 +109,7 @@ export default function Accueil() {
           .then(() => {
             // If the request is successful, it updates the books state, fetches the latest book data using the getData function, and closes the modal by toggling the showModal state.
             setBooks(books);
-            getData();
+            getAdmin();
             setShowModal(!showModal);
           })
           .catch((err) => {
@@ -119,16 +132,15 @@ export default function Accueil() {
 
   // This handleDisconnected function is a handler for logging out the admin user from the application. It removes the admin_id from the session storage using the removeItem method.
   const handleDisconnected = () => {
-    sessionStorage.removeItem("admin_id");
     const cookies = document.cookie.split(";");
-    // The loop splits each cookie string by the equal sign and uses the cookie name to check if it is stored in the session storage using the getItem method.
-    // It then loops through all the cookies stored in the browser and deletes the ones that are not stored in the session storage using the document.cookie property.
+    // The loop splits each cookie string by the equal sign and uses the cookie name to check if it is the token cookie.
+    // If it is the token cookie, it is deleted by setting its expiration date to a past date using the document.cookie property.
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim().split("=")[0];
-      // If a cookie is not stored in the session storage, it deletes it by setting its expiration date to a past date using the document.cookie property.
-      if (!sessionStorage.getItem(cookie)) {
-        document.cookie = `${cookie}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      const cookie = cookies[i].trim().split("=");
+      console.warn(cookie);
+      if (cookie[0] === "token") {
+        document.cookie = `${cookie[0]}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
       }
     }
     // Finally, the function uses the navigate function from the @reach/router library to navigate the user back to the home page ("/") of the application.
@@ -310,7 +322,7 @@ export default function Accueil() {
                 <p>{book.resume}</p>
                 <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
 
-                <Link to={`/book/${book.id}`} key={book.id}>
+                <Link to={`/onebook/${book.id}`} key={book.id}>
                   <button className="buttonKnow" type="button">
                     En savoir plus
                   </button>

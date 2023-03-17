@@ -27,9 +27,12 @@ router.post("/borrower", borrowerControllers.add);
 router.delete("/borrower/:id", borrowerControllers.destroy);
 
 // Routes book
-router.get("/book", bookControllers.browse);
-router.get("/books", bookControllers.browseAdmin);
-router.get("/book/:id", bookControllers.read);
+// All books
+router.get("/books", bookControllers.browse);
+// Book of the admin
+router.get("/book/:id", bookControllers.readAdmin);
+// Book by id
+router.get("/onebook/:id", bookControllers.read);
 router.put("/book/:id", bookControllers.edit);
 router.post("/book", bookControllers.add);
 router.delete("/book/:id", bookControllers.destroy);

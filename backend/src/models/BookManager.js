@@ -9,9 +9,9 @@ class BookManager extends AbstractManager {
     return this.connection.query(`select * from  ${this.table}`);
   }
 
-  findAll(adminId) {
+  findAllByAdminId(id) {
     return this.connection
-      .query(`SELECT * FROM ${this.table} WHERE admin_id = ?`, [adminId])
+      .query(`SELECT * FROM ${this.table} WHERE admin_id = ?`, [id])
       .then(([rows]) => {
         return rows;
       })
