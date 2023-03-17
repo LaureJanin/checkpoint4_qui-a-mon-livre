@@ -14,7 +14,7 @@ import "./App.scss";
 export default function App() {
   // This function check if the user is authenticated with checking if there is a cookie.
   function isAuthenticated() {
-    const token = Cookies.get("admin_auth_frontend");
+    const token = Cookies.get("token");
     return token;
   }
 

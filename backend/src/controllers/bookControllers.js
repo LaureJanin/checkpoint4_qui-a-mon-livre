@@ -2,9 +2,9 @@ const models = require("../models");
 
 const browse = (req, res) => {
   models.book
-    .findAll(req.session.adminId)
-    .then((books) => {
-      res.send(books);
+    .findAllBooks()
+    .then(([rows]) => {
+      res.send(rows);
     })
     .catch((err) => {
       console.error(err);
@@ -12,11 +12,11 @@ const browse = (req, res) => {
     });
 };
 
-const browseAdmin = (req, res) => {
+const readAdmin = (req, res) => {
   models.book
-    .findAllBooks()
-    .then(([rows]) => {
-      res.send(rows);
+    .findAllByAdminId(req.params.id)
+    .then((books) => {
+      res.send(books);
     })
     .catch((err) => {
       console.error(err);
@@ -90,7 +90,7 @@ const destroy = (req, res) => {
 
 module.exports = {
   browse,
-  browseAdmin,
+  readAdmin,
   read,
   edit,
   add,
