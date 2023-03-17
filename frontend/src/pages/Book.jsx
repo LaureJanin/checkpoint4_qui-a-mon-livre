@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import jwtDecode from "jwt-decode";
+import Cookies from "js-cookie";
 import moment from "moment";
 import instance from "../utils/instance";
 import "./styles/Book.scss";
@@ -29,7 +31,7 @@ export default function Book() {
   const getData = () => {
     instance
       // The first GET request uses the instance object to send a GET request to the server to retrieve the book's information using the id parameter. Upon a successful response, it updates the book state with the retrieved data.
-      .get(`/book/${id}`)
+      .get(`/onebook/${id}`)
       .then((result) => {
         setBook(result.data);
         const borrowerId = result.data.borrower_id;
@@ -80,8 +82,10 @@ export default function Book() {
     e.preventDefault();
     // It then sets isEditingBook state to false to indicate that the book is no longer being edited.
     setIsEditingBook(false);
-    // The function then retrieves the admin_id from sessionStorage and uses the instance object to send a PUT request to the server to update the book's information. The id parameter is used to identify the book that needs to be updated. The new book information is sent as an object with properties title, author, year, resume, isBorrowed, loan_date, borrower_id, and admin_id.
-    const adminId = window.sessionStorage.getItem("admin_id");
+    // We take the token
+    const token = Cookies.get("token");
+    const decodedToken = jwtDecode(token);
+    const adminId = decodedToken.sub;
     instance
       .put(`/book/${id}`, {
         title: titleBook,

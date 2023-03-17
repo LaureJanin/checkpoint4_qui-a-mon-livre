@@ -42,7 +42,8 @@ export default function RegisterForm() {
     }
     // It then checks if the password meets a specific regular expression pattern that requires it to have at least one digit, one lowercase letter, one uppercase letter, one special character, and a minimum length of 8 characters. If the password does not meet this requirement, it displays another error message using the toast function.
     const passwordRegex =
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[?._+\-<>!@#$%^&*]).{8,}$/;
+
     if (!passwordRegex.test(password)) {
       toast.error(
         "Le mot de passe doit contenir au moins une minuscule, une majuscule, un caractère spécial et doit avoir une longueur minimale de 8 caractères",

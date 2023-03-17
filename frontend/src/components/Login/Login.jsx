@@ -1,6 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
-import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import instance from "../../utils/instance";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,15 +18,12 @@ export default function Login() {
   };
 
   // This function handles a login process, sending a POST request to the "/login" endpoint using Axios instance, and then handling the response using a Promise.
-  // If the login is successful, the function sets a cookie ("admin_auth_frontend") with the returned token, stores the admin ID in session storage, and navigates to the "/accueil" page.
   // If the login fails, it logs an error and displays a toast message indicating that the username or password is incorrect.
   const handleLogin = (e) => {
     e.preventDefault();
     instance
       .post("/login", loginAdmin)
-      .then(({ data: { token, adminId } }) => {
-        Cookies.set("admin_auth_frontend", token);
-        window.sessionStorage.setItem("admin_id", adminId);
+      .then(() => {
         navigate("/accueil");
       })
       .catch((err) => {
