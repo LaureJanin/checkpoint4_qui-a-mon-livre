@@ -85,7 +85,7 @@ export default function Book() {
     // We take the token
     const token = Cookies.get("token");
     const decodedToken = jwtDecode(token);
-    const adminId = decodedToken.sub;
+    const adminId = decodedToken.id;
     instance
       .put(`/book/${id}`, {
         title: titleBook,
