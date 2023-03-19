@@ -31,9 +31,9 @@ export default function Accueil() {
 
   // The function begins by getting the value of the "token" cookie using the get() function from the Cookies library.
   const getAdmin = () => {
+    // The token is retrieved from the cookies
     const token = Cookies.get("token");
     // The next line decodes the JWT token to obtain the admin ID using the jwtDecode() function.
-
     const decodedToken = jwtDecode(token);
     const adminId = decodedToken.id;
     // The instance object is presumably an Axios instance configured to communicate with a particular API backend.
@@ -55,7 +55,6 @@ export default function Accueil() {
           .then((result) => {
             setBooks(result.data);
             // If the admin ID is equal to 1, the setIsSuperAdmin() function is called to set a boolean state indicating that the current admin is a superadmin.
-
             if (result.data.length > 0) {
               setIsBook(false);
             } else {
