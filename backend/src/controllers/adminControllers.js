@@ -30,7 +30,7 @@ const read = (req, res) => {
     });
 };
 
-// This code defines a function called add that is used to add a new admin user to a database.
+// This function called add is used to add a new admin user to a database.
 const add = (req, res) => {
   // Within the function, it extracts the password field from the req.body object.
   const { password } = req.body;
@@ -60,16 +60,22 @@ const add = (req, res) => {
   });
 };
 
+// This function called log is used to login in the application.
 const log = (req, res) => {
+  // The function begins by extracting the username and password values from the req.body object.
   const { username, password } = req.body;
   models.admin
     .findByUsername(username)
+    // The findByUsername method returns a promise that resolves with an array containing an array with a single admin object, hence the use of [[admin]] to destructure it.
     .then(([[admin]]) => {
       if (!admin) {
+        // If no admin object is found, the function sends a response with a 403 status code and a JSON object containing an error property set to "User not found".
         return res.status(403).json({ error: "User not found" });
       }
+      // If an admin object is found, the function calls a verify function with the admin's password and the provided password.
       verify(admin.password, password)
         .then((match) => {
+          // If the passwords match, the function generates a JWT token using the generateToken function with the admin's username and id, sets a cookie with the token, and sends a response with a 200 status code and a JSON object containing a success property set to "Admin logged", the admin's id, and the token.
           if (match) {
             const token = generateToken({
               username: admin.username,

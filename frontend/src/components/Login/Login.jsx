@@ -24,6 +24,7 @@ export default function Login() {
     e.preventDefault();
     instance
       .post("/login", loginAdmin)
+      // The token is set in the cookies.
       .then((res) => {
         Cookies.set("token", res.data.token);
       })
