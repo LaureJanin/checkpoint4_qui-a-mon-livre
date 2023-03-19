@@ -75,10 +75,11 @@ const log = (req, res) => {
               username: admin.username,
               id: admin.id,
             });
-            return res
-              .cookie("token", token)
-              .status(200)
-              .json({ success: "Admin logged", adminId: admin.id });
+            return res.cookie("token", token).status(200).json({
+              success: "Admin logged",
+              adminId: admin.id,
+              token,
+            });
           }
           return res.status(403).json({ error: "password incorrect" });
         })

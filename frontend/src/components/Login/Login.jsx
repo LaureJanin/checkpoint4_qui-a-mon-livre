@@ -1,6 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 import instance from "../../utils/instance";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -23,6 +24,9 @@ export default function Login() {
     e.preventDefault();
     instance
       .post("/login", loginAdmin)
+      .then((res) => {
+        Cookies.set("token", res.data.token);
+      })
       .then(() => {
         navigate("/accueil");
       })
