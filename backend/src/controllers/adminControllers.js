@@ -76,7 +76,7 @@ const log = (req, res) => {
               id: admin.id,
             });
             return res
-              .cookie("token", token, { httpsOnly: true, secure: true })
+              .cookie("token", token, { httpOnly: true, secure: false })
               .status(200)
               .json({ success: "Admin logged", adminId: admin.id });
           }
