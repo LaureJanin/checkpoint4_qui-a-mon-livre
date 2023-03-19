@@ -1,5 +1,5 @@
 const { verify, hash, argon2id } = require("argon2");
-const jwt = require("jsonwebtoken");
+const { generateToken } = require("../services/jwt");
 const models = require("../models");
 
 const browse = (req, res) => {
@@ -71,14 +71,12 @@ const log = (req, res) => {
       verify(admin.password, password)
         .then((match) => {
           if (match) {
-            const token = jwt.sign(
-              { username: admin.username, sub: admin.id },
-              process.env.JWT_SECRET,
-              { expiresIn: "1h" }
-            );
-            // set the token cookie with the generated JWT
-            res.cookie("token", token);
+            const token = generateToken({
+              username: admin.username,
+              id: admin.id,
+            });
             return res
+              .cookie("token", token, { httpsOnly: true, secure: true })
               .status(200)
               .json({ success: "Admin logged", adminId: admin.id });
           }

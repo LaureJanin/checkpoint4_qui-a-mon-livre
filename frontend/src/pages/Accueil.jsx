@@ -35,7 +35,7 @@ export default function Accueil() {
     // The next line decodes the JWT token to obtain the admin ID using the jwtDecode() function.
 
     const decodedToken = jwtDecode(token);
-    const adminId = decodedToken.sub;
+    const adminId = decodedToken.id;
     // The instance object is presumably an Axios instance configured to communicate with a particular API backend.
     // The function then sends a GET request to the backend to obtain the admin object associated with the decoded admin ID.
     instance
@@ -84,7 +84,7 @@ export default function Accueil() {
     e.preventDefault();
     const token = Cookies.get("token");
     const decodedToken = jwtDecode(token);
-    const adminId = decodedToken.sub;
+    const adminId = decodedToken.id;
     instance
       .post(`/borrower`, {
         firstname: "John",
@@ -138,7 +138,6 @@ export default function Accueil() {
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i].trim().split("=");
-      console.warn(cookie);
       if (cookie[0] === "token") {
         document.cookie = `${cookie[0]}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
       }
