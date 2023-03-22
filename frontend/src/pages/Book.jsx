@@ -179,9 +179,16 @@ export default function Book() {
     fontWeight: "700",
   };
 
+  // Variable for the color of username
+  const styleTitle = {
+    color: "#c9768f",
+  };
+
   return (
     <section className="container_book">
-      <h1>Emprunt en cours</h1>
+      <h1>
+        Emprunt en cours : <span style={styleTitle}>{book.title}</span>
+      </h1>
       <div className="box">
         {isEditingBook ? (
           <div>
@@ -315,38 +322,44 @@ export default function Book() {
           </section>
         )}
       </div>
-      <button
-        type="submit"
-        className="buttonReturn"
-        key={book.id}
-        onClick={deleteModal}
-      >
-        Le livre a été rendu
-      </button>
-      {showDeleteModal && (
-        <div>
-          <div className="overlay" />
-          <div className="modal_form">
-            <p>Êtes-vous sûr de vouloir supprimer cet emprunt ?</p>
-            <button
-              className="save"
-              type="button"
-              onClick={() => handleDelete(book.id)}
-            >
-              Oui
-            </button>
-            <button className="save" type="button" onClick={handleCancelDelete}>
-              Annuler
-            </button>
-          </div>
-        </div>
-      )}
-
-      <Link to="/accueil">
-        <button className="buttonReturn" type="button">
-          Accueil
+      <div className="buttons">
+        <button
+          type="submit"
+          className="buttonReturn"
+          key={book.id}
+          onClick={deleteModal}
+        >
+          Le livre a été rendu
         </button>
-      </Link>
+        {showDeleteModal && (
+          <div>
+            <div className="overlay" />
+            <div className="modal_form">
+              <p>Êtes-vous sûr de vouloir supprimer cet emprunt ?</p>
+              <button
+                className="save"
+                type="button"
+                onClick={() => handleDelete(book.id)}
+              >
+                Oui
+              </button>
+              <button
+                className="save"
+                type="button"
+                onClick={handleCancelDelete}
+              >
+                Annuler
+              </button>
+            </div>
+          </div>
+        )}
+
+        <Link to="/accueil">
+          <button className="buttonReturn" type="button">
+            Accueil
+          </button>
+        </Link>
+      </div>
     </section>
   );
 }

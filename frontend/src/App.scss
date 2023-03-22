@@ -1,8 +1,11 @@
 @import "../src/assets/_variables.scss";
 
-* {
-  margin: 0;
-  font-family: $font-stack;
+:root {
+  background-color: #3a373e;
+  * {
+    margin: 0;
+    font-family: $font-stack;
+  }
 }
 
 @media screen and (max-width: 768px) {

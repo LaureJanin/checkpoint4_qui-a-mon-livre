@@ -5,40 +5,38 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
-  color: white;
-
-  padding-bottom: 2rem;
+  gap: 1.5rem;
   h1 {
-    font-size: 2rem;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    color: beige;
   }
   .buttonDashboard {
-    width: 15rem;
-    height: 4rem;
+    width: 10rem;
+    height: 3rem;
     margin-right: 1rem;
-    font-size: 18px;
+    font-size: 16px;
     text-align: center;
     vertical-align: middle;
     background-color: #583c87;
-    color: white;
+    color: beige;
     border-radius: 5px;
     border: none;
     box-shadow: 0 10px 15px 10px rgba(0, 0, 0, 0.1),
       0 4px 6px 8px rgba(1, 1, 1, 0.05);
   }
   .buttonAdd {
-    width: 15rem;
-    height: 4rem;
+    width: 10rem;
+    height: 3rem;
     text-align: center;
     vertical-align: middle;
     background-color: #c9768f;
     box-shadow: 0 10px 15px 10px rgba(0, 0, 0, 0.1),
       0 4px 6px 8px rgba(1, 1, 1, 0.05);
-    color: white;
-    font-size: 18px;
+    color: beige;
+    font-size: 16px;
     border-radius: 5px;
     border: none;
-    margin: 2rem auto;
   }
 
   .buttonAdd:hover,
@@ -66,8 +64,9 @@
     gap: 1rem;
     background-color: #c9768f;
     width: 25rem;
-    height: 36rem;
-    border-radius: 5px;
+    height: auto;
+    padding: 1.5rem 0;
+    border-radius: 5%;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -79,7 +78,7 @@
       box-shadow: none;
       width: 1rem;
       align-self: flex-end;
-      margin-right: 1.5rem;
+      margin-right: 2rem;
       background-color: transparent;
       border: none;
     }
@@ -90,6 +89,7 @@
 
     label {
       font-size: 20px;
+      font-weight: 700;
       color: #3a373e;
     }
     input,
@@ -97,6 +97,7 @@
       border-radius: 3px;
       border: none;
       width: 20rem;
+      font-size: 15px;
     }
     input {
       height: 2rem;
@@ -106,14 +107,14 @@
     }
     .save {
       margin-top: 1rem;
-      width: 10rem;
-      height: 2rem;
-      border-radius: 3px;
+      width: 12rem;
+      height: 3rem;
+      border-radius: 5px;
       border: none;
       font-size: 18px;
-      color: #3a373e;
-      font-weight: 700;
-      box-shadow: 0 3px 10px 2px rgb(106, 67, 89);
+      font-weight: 300;
+      color: beige;
+      background-color: #583c87;
     }
     .save:active {
       transform: translateY(2px);
@@ -121,6 +122,7 @@
 
     .save:hover {
       cursor: pointer;
+      background-color: #7b7373;
     }
   }
 
@@ -132,25 +134,51 @@
   .slider-section {
     width: 100%;
     .slider-flex {
-      width: 80%;
+      width: 70%;
+      height: 32rem;
       margin: auto;
-      padding: 2rem 5rem;
-      .card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        height: auto;
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-        padding-bottom: 1rem;
+      padding-left: 1rem;
+      .cards {
         padding-top: 1rem;
-        margin-top: 1rem;
-        cursor: pointer;
-        &:hover {
-          transform: scale(1.1);
+        padding-bottom: 1rem;
+        .card {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          height: 28rem;
+          max-width: 80%;
+          margin: 0 auto;
+          padding: 1.5rem;
+          color: beige;
+          background-color: #3a373e;
+          border: 2px solid #c9768f;
+          border-radius: 5%;
+          cursor: pointer;
+          &:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 0.2rem #583c87);
+            transition-duration: 0.3s;
+          }
+          h3 {
+            color: #c9768f;
+          }
+          .resume {
+            word-wrap: break-word;
+          }
+          .buttonKnow {
+            width: 9rem;
+            height: 2.5rem;
+            background-color: #c9768f;
+            color: beige;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+          }
+          .buttonKnow:hover {
+            cursor: pointer;
+            background-color: #7b7373;
+          }
         }
       }
       .slick-next,
@@ -165,12 +193,12 @@
       .slick-prev:before,
       .slick-next:before {
         font-size: 35px;
-        color: black;
+        color: #c9768f;
       }
 
       .slick-prev:hover:before,
       .slick-next:hover:before {
-        color: #c9768f;
+        color: #583c87;
       }
 
       .slick-prev:hover,
@@ -178,66 +206,55 @@
         background-color: transparent;
         transform: none;
       }
-
-      .buttonKnow {
-        width: 10rem;
-        height: 3rem;
-        text-align: center;
-        vertical-align: middle;
-        background-color: #c9768f;
-        color: white;
-        border-radius: 5px;
-        border: none;
-        margin-bottom: 1rem;
-        margin-top: 1rem;
-        font-size: 1rem;
-      }
-      .buttonKnow:hover {
-        cursor: pointer;
-        background-color: #7b7373;
-        transform: translateY(2px);
-      }
     }
   }
 
-  // SCSS for slider when there are 1, 2 or 3 books only
+  // SCSS for slider when there are 1 or 2 books only
   .notSlider {
     width: 100%;
     margin: auto;
     display: flex;
     justify-content: center;
-    gap: 4rem;
+    gap: 3rem;
     .card {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      min-height: 25rem;
-      min-width: 15rem;
-      width: 21rem;
-      padding-bottom: 4rem;
-      padding-top: 4rem;
+      justify-content: space-between;
+      min-height: 27rem;
+      max-width: 20rem;
+      width: 20rem;
+      padding: 1.5rem;
+      color: beige;
+      background-color: #3a373e;
+      border: 2px solid #c9768f;
+      border-radius: 5%;
       cursor: pointer;
       &:hover {
-        transform: scale(1.1);
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 0.2rem #583c87);
+        transition-duration: 0.3s;
+      }
+      h3 {
+        color: #c9768f;
+      }
+      .resume {
+        word-wrap: break-word;
       }
     }
     .buttonKnow {
-      width: 10rem;
-      height: 3rem;
+      width: 9rem;
+      height: 2.5rem;
       text-align: center;
       vertical-align: middle;
       background-color: #c9768f;
-      color: white;
+      color: beige;
       border-radius: 5px;
       border: none;
-      margin-top: 2rem;
       font-size: 1rem;
     }
     .buttonKnow:hover {
       background-color: #7b7373;
-      transform: translateY(2px);
     }
   }
   .card-list {
@@ -245,12 +262,12 @@
   }
 
   .buttonDisconnect {
-    width: 12rem;
+    width: 10rem;
     height: 3rem;
     text-align: center;
     vertical-align: middle;
     background-color: #583c87;
-    color: white;
+    color: beige;
     border-radius: 5px;
     border: none;
     font-size: 16px;
@@ -284,6 +301,7 @@
     box-shadow: none;
     p {
       font-size: 20px;
+      font-weight: 700;
       color: #3a373e;
       text-align: center;
       margin: 0;
@@ -296,7 +314,6 @@
       font-size: 18px;
       color: #3a373e;
       font-weight: 700;
-      box-shadow: 0 3px 10px 2px rgb(106, 67, 89);
     }
     .save:active {
       transform: translateY(2px);
@@ -322,11 +339,10 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin-top: 1rem;
       a {
         .buttonDashboard {
-          margin: 0;
           margin-right: 0;
+          margin-bottom: 1rem;
         }
       }
     }
@@ -349,14 +365,18 @@
         gap: 1rem;
         padding: 1rem;
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
+        color: beige;
+        h3 {
+          color: #c9768f;
+        }
         .buttonKnow {
           width: 10rem;
           height: 3rem;
           text-align: center;
           vertical-align: middle;
           background-color: #c9768f;
-          color: white;
+          color: beige;
           border-radius: 5px;
           border: none;
           margin-bottom: 1rem;
@@ -368,6 +388,9 @@
           transform: translateY(2px);
         }
       }
+    }
+    .buttonDisconnect {
+      margin-bottom: 2rem;
     }
   }
 }
