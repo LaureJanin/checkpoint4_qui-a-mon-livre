@@ -162,8 +162,12 @@ export default function Accueil() {
   return (
     <section className="container_accueil">
       <h1>
-        Bonjour <span style={styleH1}>{admin.username}</span>, voici la liste de
-        vos livres empruntés
+        Bonjour <span style={styleH1}>{admin.username}</span>, vous avez
+        actuellement{" "}
+        <span style={styleH1}>
+          {books.length} livre{books.length <= 1 ? "" : "s"}
+        </span>{" "}
+        emprunté{books.length <= 1 ? "" : "s"}
       </h1>
       <div className="buttons">
         {isSuperAdmin && (
@@ -233,13 +237,7 @@ export default function Accueil() {
         )}
       </div>
       {isBook ? (
-        <>
-          <br />
-          <br />
-          <p>Vous n'avez pas d'emprunt enregistré</p>
-          <br />
-          <Player autoplay loop src={pile} className="notFoundLottie" />
-        </>
+        <Player autoplay loop src={pile} className="notFoundLottie" />
       ) : (
         <>
           <section className="slider-section">
@@ -272,9 +270,13 @@ export default function Accueil() {
                       <h3>{book.title}</h3>
                       <p>{book.author}</p>
                       <p>{book.year}</p>
-                      <p>{book.resume}</p>
-                      <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
-
+                      <p className="resume">{book.resume}</p>
+                      <p>
+                        Emprunté le{" "}
+                        <span style={styleH1}>
+                          {moment(book.loan_date).format("DD MMM YYYY")}
+                        </span>
+                      </p>
                       <Link to={`/book/${book.id}`} key={book.id}>
                         <button className="buttonKnow" type="button">
                           En savoir plus
@@ -298,8 +300,12 @@ export default function Accueil() {
                       <p>{book.author}</p>
                       <p>{book.year}</p>
                       <p>{book.resume}</p>
-                      <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
-
+                      <p>
+                        Emprunté le{" "}
+                        <span style={styleH1}>
+                          {moment(book.loan_date).format("DD MMM YYYY")}
+                        </span>
+                      </p>
                       <Link to={`/book/${book.id}`} key={book.id}>
                         <button className="buttonKnow" type="button">
                           En savoir plus
@@ -318,8 +324,12 @@ export default function Accueil() {
                 <p>{book.author}</p>
                 <p>{book.year}</p>
                 <p>{book.resume}</p>
-                <p>{moment(book.loan_date).format("DD MMM YYYY")}</p>
-
+                <p>
+                  Emprunté le{" "}
+                  <span style={styleH1}>
+                    {moment(book.loan_date).format("DD MMM YYYY")}
+                  </span>
+                </p>
                 <Link to={`/onebook/${book.id}`} key={book.id}>
                   <button className="buttonKnow" type="button">
                     En savoir plus

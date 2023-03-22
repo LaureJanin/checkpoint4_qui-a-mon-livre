@@ -14,10 +14,33 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // margin-top: 8rem;
 
     h1 {
       font-weight: 300;
+      color: beige;
+      border-style: solid;
+      padding-bottom: 2rem;
+      border-image: linear-gradient(
+          to left,
+          #3a373e 5%,
+          #583c87 50%,
+          #3a373e 95%
+        )
+        100% 0 100% 0/0px 0 4px 0 stretch;
+      animation-name: border-anim;
+      animation-duration: 1.5s;
+      animation-timing-function: ease-out;
+      animation-fill-mode: forwards;
+      clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%);
+    }
+
+    @keyframes border-anim {
+      from {
+        clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%);
+      }
+      to {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+      }
     }
 
     .formLogin {
@@ -27,14 +50,21 @@
       justify-content: center;
       gap: 1rem;
       background-color: #c9768f;
-      width: 24rem;
-      height: 23rem;
-      border-radius: 5px;
+      width: 22rem;
+      height: auto;
+      padding: 1.5rem 0;
+      border-radius: 5%;
       box-shadow: #c9768f;
       box-shadow: 0 3px 10px 2px rgb(48, 43, 43);
       margin-top: 2rem;
+      opacity: 0;
+      animation-name: slideInFromBottom;
+      animation-duration: 1.5s;
+      animation-timing-function: ease-out;
+      animation-fill-mode: forwards;
       label {
         font-size: 20px;
+        font-weight: 700;
         color: #3a373e;
       }
 
@@ -44,6 +74,7 @@
           align-items: center;
           justify-content: center;
           font-size: 1rem;
+          font-weight: 300;
           gap: 0.5rem;
           input {
             width: 1rem;
@@ -61,15 +92,14 @@
       }
 
       button {
-        width: 13rem;
+        width: 12rem;
         height: 2rem;
-        border-radius: 3px;
+        border-radius: 5px;
         border: none;
+        background-color: #583c87;
         font-family: $font-stack;
-        font-size: 18px;
-        color: #3a373e;
-        font-weight: 700;
-        box-shadow: 0 3px 10px 2px rgb(106, 67, 89);
+        font-size: 16px;
+        color: beige;
       }
       button:active {
         transform: translateY(2px);
@@ -77,21 +107,26 @@
 
       button:hover {
         cursor: pointer;
+        background-color: #7b7373;
+      }
+    }
+    @keyframes slideInFromBottom {
+      from {
+        opacity: 0;
+        transform: translateY(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
   }
 }
 @media screen and (max-width: 768px) {
   .container {
-    width: 95%;
-    margin: auto;
     .login {
-      margin-top: 0;
       h1 {
         text-align: center;
-      }
-      .formLogin {
-        width: 95%;
       }
     }
   }
